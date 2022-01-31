@@ -16,7 +16,7 @@ When you have set the PATH variable for mingw32 or mingw64 `set PATH=C:\mingw\bi
 ### Linux
 Please remember to install the required dependencies lib-sdl2 32 bit and or 64 bit. In some distros there is an extra libsdl2-dev 32 bit or 64 bit package like Debian or Ubuntu.  
 You can use the projectfile for CodeBlocks under `gcc\`.
-Otherwise you can use the makefile by simply type in `make` in `makelinuxx86\` or `makelinuxx64\ folder in the repository.
+Otherwise you can use the makefile by simply type in `make` in `makelinuxx86\` or `makelinuxx64\` folder in the repository.
 
 ## Install
 
