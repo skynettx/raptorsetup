@@ -33,7 +33,7 @@ char g_setup_path[PATH_MAX];
 int controltype;
 int musiccard;
 int soundfxcard;
-int fullscreen, aspect_ratio, haptic;
+int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew;
 int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keymega;
 
 txt_window_t* infowindow;
@@ -151,6 +151,7 @@ void GetSetupSettings(void)
     fullscreen = INI_GetPreferenceLong("Video", "fullscreen", 0);
     aspect_ratio = INI_GetPreferenceLong("Video", "aspect_ratio_correct", 1);
     haptic = INI_GetPreferenceLong("Setup", "Haptic", 1);
+    joy_ipt_MenuNew = INI_GetPreferenceLong("Setup", "joy_ipt_MenuNew", 0);
 }
 /////////////////////////////////////////////Get Setup.ini/////////////////////////////////////////////////////////////////////
 const char* RAP_DataPath(void)
@@ -180,6 +181,7 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     INI_PutPreferenceLong("Setup", "Haptic", haptic);                           //Save Additional Feature Haptic to SETUP.INI
+    INI_PutPreferenceLong("Setup", "joy_ipt_MenuNew", joy_ipt_MenuNew);         //Save Additional Feature joy_ipt_MenuNew to SETUP.INI
 
     if (CardType)                                                               //Save Music Card to SETUP.INI
     {
@@ -379,6 +381,7 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 
     TXT_AddWidget(window, TXT_NewSeparator("Controller"));
     TXT_AddWidget(window, TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic));
+    TXT_AddWidget(window, TXT_NewCheckBox("New Joystick Menu Input", &joy_ipt_MenuNew));
 }
 ////////////////////////////////////////////////Select ControlButtonConfigMain////////////////////////////////////////////////////
 void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)

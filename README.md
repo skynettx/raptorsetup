@@ -5,7 +5,7 @@ This tool based on the awesome libtextscreen from chocolate-doom.
 
 ![Alt text](https://imgur.com/hCShMSr.jpg "Raptor Setup")
 ## Build
-The project support the compilers msvc and gcc. Supported architectures are 32 bit and 64 bit
+The project supports the compilers msvc and gcc. Supported architectures are 32 bit and 64 bit
 for Windows and Linux. When you have installed git on your system you can clone the repository 
 by type in `git clone https://github.com/skynettx/raptorsetup.git`.
 
