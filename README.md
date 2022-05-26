@@ -5,8 +5,8 @@ This tool based on the awesome libtextscreen from chocolate-doom.
 
 ![Alt text](https://imgur.com/hCShMSr.jpg "Raptor Setup")
 ## Build
-The project supports the compilers msvc and gcc. Supported architectures are 32 bit and 64 bit
-for Windows and Linux. When you have installed git on your system you can clone the repository 
+The project supports the compilers msvc, gcc and clang. Supported architectures are 32 bit and 64 bit
+for Windows, Linux and macOS. When you have installed git on your system you can clone the repository 
 by type in `git clone https://github.com/skynettx/raptorsetup.git`.
 
 ### Windows
@@ -23,6 +23,16 @@ cmake ..
 make  
 ```
 
+### macOS
+Please remember to install the required dependencies lib-sdl2.
+To build use cmake, type in the root of the repository:
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
 ## Install
 
 ### Windows
@@ -31,6 +41,9 @@ Copy the `SDL.dll` from `include\SDL2-devel-2.0.14-VC\SDL2-2.0.14\lib\x86\` `inc
 
 ### Linux
 Install lib-sdl2 32 bit and or 64 bit from the packagemanager of your respective distro.
+
+### macOS
+Install lib-sdl2 from dmg or from a packagemanager like brew etc.
 
 ## Thanks
 Special thanks for libtextscreen to all contributors from chocolate-doom project.

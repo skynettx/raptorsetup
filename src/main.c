@@ -10,6 +10,10 @@
 #include <sys/io.h>
 #define PATH_MAX        4096
 #endif // __linux__
+#ifdef __APPLE__
+#include <unistd.h>
+#define PATH_MAX        4096
+#endif // __APPLE__
 
 #include "textscreen.h"
 #include "prefapi.h"
