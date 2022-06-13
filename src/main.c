@@ -188,8 +188,8 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
 
     INI_PutPreferenceLong("Setup", "Haptic", haptic);                           //Save Additional Feature Haptic to SETUP.INI
     INI_PutPreferenceLong("Setup", "joy_ipt_MenuNew", joy_ipt_MenuNew);         //Save Additional Feature joy_ipt_MenuNew to SETUP.INI
-    INI_PutPreferenceLong("Setup", "alsa_output_client", alsaclient);           //Save Additional Feature Alsa Output Port 1/2 to SETUP.INI
-    INI_PutPreferenceLong("Setup", "alsa_output_port", alsaport);               //Save Additional Feature Alsa Output Port 2/2 to SETUP.INI
+    INI_PutPreferenceLong("Setup", "alsa_output_client", alsaclient);           //Save Additional Feature alsa_output_client to SETUP.INI
+    INI_PutPreferenceLong("Setup", "alsa_output_port", alsaport);               //Save Additional Feature alsa_output_port to SETUP.INI
     
     if (CardType)                                                               //Save Music Card to SETUP.INI
     {
