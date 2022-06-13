@@ -37,7 +37,7 @@ char g_setup_path[PATH_MAX];
 int controltype;
 int musiccard;
 int soundfxcard;
-int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew;
+int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew, alsaclient, alsaport;
 int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keymega;
 
 txt_window_t* infowindow;
@@ -156,6 +156,8 @@ void GetSetupSettings(void)
     aspect_ratio = INI_GetPreferenceLong("Video", "aspect_ratio_correct", 1);
     haptic = INI_GetPreferenceLong("Setup", "Haptic", 1);
     joy_ipt_MenuNew = INI_GetPreferenceLong("Setup", "joy_ipt_MenuNew", 0);
+    alsaclient = INI_GetPreferenceLong("Setup", "alsa_output_client", 128);
+    alsaport = INI_GetPreferenceLong("Setup", "alsa_output_port", 0);
 }
 /////////////////////////////////////////////Get Setup.ini/////////////////////////////////////////////////////////////////////
 const char* RAP_DataPath(void)
@@ -186,7 +188,9 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
 
     INI_PutPreferenceLong("Setup", "Haptic", haptic);                           //Save Additional Feature Haptic to SETUP.INI
     INI_PutPreferenceLong("Setup", "joy_ipt_MenuNew", joy_ipt_MenuNew);         //Save Additional Feature joy_ipt_MenuNew to SETUP.INI
-
+    INI_PutPreferenceLong("Setup", "alsa_output_client", alsaclient);           //Save Additional Feature Alsa Output Port 1/2 to SETUP.INI
+    INI_PutPreferenceLong("Setup", "alsa_output_port", alsaport);               //Save Additional Feature Alsa Output Port 2/2 to SETUP.INI
+    
     if (CardType)                                                               //Save Music Card to SETUP.INI
     {
         INI_PutPreferenceLong("Music", "Volume", 85);
@@ -375,17 +379,21 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
 ////////////////////////////////////////////////Select Additional Features////////////////////////////////////////////////////////
 void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 {
-    txt_window_t* window;
-
-    window = TXT_NewWindow("Additional Features                         ");
-
-    TXT_AddWidget(window, TXT_NewSeparator("Video"));
-    TXT_AddWidget(window, TXT_NewCheckBox("Fullscreen", &fullscreen));
-    TXT_AddWidget(window, TXT_NewCheckBox("Aspect Ratio", &aspect_ratio));
-
-    TXT_AddWidget(window, TXT_NewSeparator("Controller"));
-    TXT_AddWidget(window, TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic));
-    TXT_AddWidget(window, TXT_NewCheckBox("New Joystick Menu Input", &joy_ipt_MenuNew));
+  txt_window_t* window;
+  
+  window = TXT_NewWindow("Additional Features                         ");
+  
+  TXT_AddWidgets(window, TXT_NewSeparator("Video"),
+  TXT_NewCheckBox("Fullscreen", &fullscreen),
+  TXT_NewCheckBox("Aspect Ratio", &aspect_ratio), NULL);
+  
+  TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
+  TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port "), TXT_NewIntInputBox(&alsaclient, 4),
+  TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL), NULL);
+  
+  TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
+  TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic),
+  TXT_NewCheckBox("New Joystick Menu Input", &joy_ipt_MenuNew), NULL);
 }
 ////////////////////////////////////////////////Select ControlButtonConfigMain////////////////////////////////////////////////////
 void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
