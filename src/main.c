@@ -37,7 +37,7 @@ char g_setup_path[PATH_MAX];
 int controltype;
 int musiccard;
 int soundfxcard;
-int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew, alsaclient, alsaport;
+int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew, sys_midi, alsaclient, alsaport;
 int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keymega;
 
 txt_window_t* infowindow;
@@ -156,6 +156,7 @@ void GetSetupSettings(void)
     aspect_ratio = INI_GetPreferenceLong("Video", "aspect_ratio_correct", 1);
     haptic = INI_GetPreferenceLong("Setup", "Haptic", 1);
     joy_ipt_MenuNew = INI_GetPreferenceLong("Setup", "joy_ipt_MenuNew", 0);
+    sys_midi = INI_GetPreferenceLong("Setup", "sys_midi", 0);
     alsaclient = INI_GetPreferenceLong("Setup", "alsa_output_client", 128);
     alsaport = INI_GetPreferenceLong("Setup", "alsa_output_port", 0);
 }
@@ -188,6 +189,7 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
 
     INI_PutPreferenceLong("Setup", "Haptic", haptic);                           //Save Additional Feature Haptic to SETUP.INI
     INI_PutPreferenceLong("Setup", "joy_ipt_MenuNew", joy_ipt_MenuNew);         //Save Additional Feature joy_ipt_MenuNew to SETUP.INI
+    INI_PutPreferenceLong("Setup", "sys_midi", sys_midi);                       //Save Additional Feature sys_midi to SETUP.INI
     INI_PutPreferenceLong("Setup", "alsa_output_client", alsaclient);           //Save Additional Feature alsa_output_client to SETUP.INI
     INI_PutPreferenceLong("Setup", "alsa_output_port", alsaport);               //Save Additional Feature alsa_output_port to SETUP.INI
     
@@ -388,6 +390,7 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   TXT_NewCheckBox("Aspect Ratio", &aspect_ratio), NULL);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
+  TXT_NewCheckBox("System Midi", &sys_midi),
   TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port "), TXT_NewIntInputBox(&alsaclient, 4),
   TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL), NULL);
   
