@@ -46,4 +46,4 @@ Install lib-sdl2 32 bit and or 64 bit from the packagemanager of your respective
 Install lib-sdl2 from dmg or from a packagemanager like brew etc.
 
 ## Thanks
-Special thanks for libtextscreen to all contributors from chocolate-doom project.
+Special thanks for libtextscreen to all contributors from [chocolate-doom project](https://github.com/chocolate-doom).
