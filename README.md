@@ -10,7 +10,7 @@ for Windows, Linux and macOS. When you have installed git on your system you can
 by type in `git clone https://github.com/skynettx/raptorsetup.git`.
 
 ### Windows
-You can use the projectfile for Visual Studio 2019 under `msvc\` or the projectfile for CodeBlocks under `gcc\`.
+You can use the projectfile for Visual Studio 2022 under `msvc\` or the projectfile for CodeBlocks under `gcc\`.
  
 ### Linux
 Please remember to install the required dependencies lib-sdl2 32 bit and or 64 bit. In some distros there is an extra libsdl2-dev 32 bit or 64 bit package like Debian or Ubuntu.  
