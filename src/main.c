@@ -39,9 +39,20 @@ int musiccard;
 int soundfxcard;
 int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew, sys_midi, alsaclient, alsaport;
 int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keymega;
+static char soundfont[128];
+static char* sf;
 
 txt_window_t* infowindow;
 txt_table_t* infotable;
+
+char* stringduplicate(const char* source)
+{
+    char* destination = malloc(strlen(source) + 1);
+    if (destination == NULL)
+        return NULL;
+    strcpy(destination, source);
+    return destination;
+}
 
 void ClosePwnBox(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window))
 {
@@ -159,6 +170,7 @@ void GetSetupSettings(void)
     sys_midi = INI_GetPreferenceLong("Setup", "sys_midi", 0);
     alsaclient = INI_GetPreferenceLong("Setup", "alsa_output_client", 128);
     alsaport = INI_GetPreferenceLong("Setup", "alsa_output_port", 0);
+    sf = (char*)INI_GetPreference("Setup", "SoundFont", soundfont, 127, "SoundFont.sf2");
 }
 /////////////////////////////////////////////Get Setup.ini/////////////////////////////////////////////////////////////////////
 const char* RAP_DataPath(void)
@@ -192,6 +204,7 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
     INI_PutPreferenceLong("Setup", "sys_midi", sys_midi);                       //Save Additional Feature sys_midi to SETUP.INI
     INI_PutPreferenceLong("Setup", "alsa_output_client", alsaclient);           //Save Additional Feature alsa_output_client to SETUP.INI
     INI_PutPreferenceLong("Setup", "alsa_output_port", alsaport);               //Save Additional Feature alsa_output_port to SETUP.INI
+    INI_PutPreference("Setup", "SoundFont", sf);                                //Save Additional Feature soundfont to SETUP.INI
     
     if (CardType)                                                               //Save Music Card to SETUP.INI
     {
@@ -382,7 +395,8 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
 void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 {
   txt_window_t* window;
-  
+  sf = stringduplicate(sf);
+
   window = TXT_NewWindow("Additional Features                         ");
   
   TXT_AddWidgets(window, TXT_NewSeparator("Video"),
@@ -391,8 +405,9 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
   TXT_NewCheckBox("System Midi", &sys_midi),
-  TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port "), TXT_NewIntInputBox(&alsaclient, 4),
-  TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL), NULL);
+  TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port: "), TXT_NewIntInputBox(&alsaclient, 4),
+  TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL),
+  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), TXT_NewInputBox(&sf, 35), NULL), NULL);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
   TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic),
