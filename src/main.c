@@ -268,6 +268,8 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
         INI_PutPreferenceLong("SoundFX", "Channels", SoundChannels);
         INI_PutPreferenceLong("SoundFX", "BasePort", SoundBasePort);
         INI_PutPreferenceLong("SoundFX", "Irq", SoundIrq);
+        if (SoundDma == 1000)
+            SoundDma = 0;
         INI_PutPreferenceLong("SoundFX", "Dma", SoundDma);
     }
     if (SoundCardType == 4)
@@ -397,7 +399,7 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   txt_window_t* window;
   sf = stringduplicate(sf);
 
-  window = TXT_NewWindow("Additional Features                         ");
+  window = TXT_NewWindow("Additional Features                                         ");
   
   TXT_AddWidgets(window, TXT_NewSeparator("Video"),
   TXT_NewCheckBox("Fullscreen", &fullscreen),
@@ -533,6 +535,37 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button8, "pressed", GetSoundChannels, "Eight");
     TXT_SignalConnect(button8, "pressed", ClosePwnBox, window);
 
+    switch (SoundChannels)
+    {
+    case 1:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 2:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 3:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 4:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 5:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 6:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 7:
+        TXT_SelectWidget(table, button7);
+        break;
+    case 8:
+        TXT_SelectWidget(table, button8);
+        break;
+    default:
+        TXT_SelectWidget(table, button4);
+        break;
+    }
+    
     if (setupflag)
     {
         TXT_SignalConnect(button1, "pressed", MainMenu, NULL);
@@ -596,6 +629,31 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button6, "pressed", SoundCardChannels, NULL);
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, window);
 
+    switch (SoundDma)
+    {
+    case 1000:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 1:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 3:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 5:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 6:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 7:
+        TXT_SelectWidget(table, button6);
+        break;
+    default:
+        TXT_SelectWidget(table, button2);
+        break;
+    }
+    
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
@@ -639,6 +697,25 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button4, "pressed", SoundCardDma, NULL);
     TXT_SignalConnect(button4, "pressed", ClosePwnBox, window);
 
+    switch (SoundIrq)
+    {
+    case 2:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 5:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 7:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 10:
+        TXT_SelectWidget(table, button4);
+        break;
+    default:
+        TXT_SelectWidget(table, button3);
+        break;
+    }
+    
     if (setupflag)
     TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
@@ -699,6 +776,34 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", SoundCardIrq, NULL);
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
 
+    switch (SoundBasePort)
+    {
+    case 210:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 220:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 230:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 240:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 250:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 260:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 280:
+        TXT_SelectWidget(table, button7);
+        break;
+    default:
+        TXT_SelectWidget(table, button2);
+        break;
+    }
+    
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
@@ -772,6 +877,49 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button12, "pressed", GetSoundGMPort, "360");
     TXT_SignalConnect(button12, "pressed", ClosePwnBox, window);
 
+    switch (SoundMidiPort)
+    {
+    case 220:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 230:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 240:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 250:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 300:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 320:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 330:
+        TXT_SelectWidget(table, button7);
+        break;
+    case 332:
+        TXT_SelectWidget(table, button8);
+        break;
+    case 334:
+        TXT_SelectWidget(table, button9);
+        break;
+    case 336:
+        TXT_SelectWidget(table, button10);
+        break;
+    case 340:
+        TXT_SelectWidget(table, button11);
+        break;
+    case 360:
+        TXT_SelectWidget(table, button12);
+        break;
+    default:
+        TXT_SelectWidget(table, button7);
+        break;
+    }
+    
     if (setupflag)
     {
         TXT_SignalConnect(button1, "pressed", MainMenu, NULL);
@@ -855,6 +1003,37 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button8, "pressed", SoundCardAdPCNo, "NONE");
     TXT_SignalConnect(button8, "pressed", ClosePwnBox, window);
 
+    switch (SoundCardType)
+    {
+    case 1:
+        TXT_SelectWidget(table, button7);
+        break;
+    case 2:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 3:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 4:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 5:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 7:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 8:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 1000:
+        TXT_SelectWidget(table, button8);
+        break;
+    default:
+        TXT_SelectWidget(table, button3);
+        break;
+    }
+    
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
@@ -928,6 +1107,49 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button12, "pressed", GetMusicGMPort, "360");
     TXT_SignalConnect(button12, "pressed", ClosePwnBox, window);
 
+    switch (MidiPort)
+    {
+    case 220:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 230:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 240:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 250:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 300:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 320:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 330:
+        TXT_SelectWidget(table, button7);
+        break;
+    case 332:
+        TXT_SelectWidget(table, button8);
+        break;
+    case 334:
+        TXT_SelectWidget(table, button9);
+        break;
+    case 336:
+        TXT_SelectWidget(table, button10);
+        break;
+    case 340:
+        TXT_SelectWidget(table, button11);
+        break;
+    case 360:
+        TXT_SelectWidget(table, button12);
+        break;
+    default:
+        TXT_SelectWidget(table, button7);
+        break;
+    }
+    
     if (setupflag)
     {
         TXT_SignalConnect(button1, "pressed", FXCard, NULL);
@@ -995,6 +1217,34 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", GetMusicBasePort, "280");
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
 
+    switch (BasePort)
+    {
+    case 210:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 220:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 230:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 240:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 250:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 260:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 280:
+        TXT_SelectWidget(table, button7);
+        break;
+    default:
+        TXT_SelectWidget(table, button2);
+        break;
+    }
+    
     if (setupflag)
     {
         TXT_SignalConnect(button1, "pressed", FXCard, NULL);
@@ -1070,9 +1320,44 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button9, "pressed", MusicCardProUltraADNO, "NONE");
     TXT_SignalConnect(button9, "pressed", ClosePwnBox, window);
 
+    
+    switch (CardType)
+    {
+    case 2:
+        TXT_SelectWidget(table, button8);
+        break;
+    case 3:
+        TXT_SelectWidget(table, button7);
+        break;
+    case 4:
+        TXT_SelectWidget(table, button6);
+        break;
+    case 5:
+        TXT_SelectWidget(table, button5);
+        break;
+    case 6:
+        TXT_SelectWidget(table, button3);
+        break;
+    case 7:
+        TXT_SelectWidget(table, button2);
+        break;
+    case 8:
+        TXT_SelectWidget(table, button1);
+        break;
+    case 9:
+        TXT_SelectWidget(table, button4);
+        break;
+    case 1000:
+        TXT_SelectWidget(table, button9);
+        break;
+    default:
+        TXT_SelectWidget(table, button5);
+        break;
+    }
+    
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", FXCard, NULL);
-
+        
     TXT_AddWidget(window, TXT_NewScrollPane(28, 9, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -1091,12 +1376,10 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     txt_window_action_t* close_button;
     txt_window_action_t* accept_button;
 
-    setupflag = 0;
-
     window = TXT_NewWindow("Main Menu                ");
     TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 10);
     table = TXT_NewTable(1);
-
+    
     TXT_AddWidgets(table,
                    button1 = TXT_NewButton("Select Music Card"),
                    button2 = TXT_NewButton("Select Sound FX Card"),
@@ -1107,7 +1390,7 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
                    NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
-
+    
     TXT_SignalConnect(button1, "pressed", MusicCard, NULL);
     TXT_SignalConnect(button2, "pressed", FXCard, NULL);
     TXT_SignalConnect(button3, "pressed", Control, NULL);
@@ -1118,10 +1401,15 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, infowindow);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, infowindow);
-
+    
+    if(setupflag)
+        TXT_SelectWidget(table, button6);
+    
     TXT_AddWidget(window, TXT_NewScrollPane(25, 6, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
+
+    setupflag = 0;
 }
 
 int main(int argc, char *argv[])

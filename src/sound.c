@@ -91,7 +91,7 @@ void GetSoundChannels(TXT_UNCAST_ARG(widget), void* user_data)
 void GetSoundDma(TXT_UNCAST_ARG(widget), void* user_data)
 {
 	if (strcmp(user_data, "0") == 0)
-		SoundDma = 0;
+		SoundDma = 1000;                   
 	if (strcmp(user_data, "1") == 0)
 		SoundDma = 1;
 	if (strcmp(user_data, "3") == 0)
