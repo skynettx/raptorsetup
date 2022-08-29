@@ -42,6 +42,7 @@ int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keym
 static char soundfont[128];
 static char* sf;
 
+txt_window_t* mainwindow;
 txt_window_t* infowindow;
 txt_table_t* infotable;
 
@@ -391,6 +392,7 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_NewLabel(textbox_soundfx),
         NULL);
     
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(infowindow, infotable);
 }
@@ -402,6 +404,7 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 
   window = TXT_NewWindow("Additional Features                                         ");
   
+  TXT_SetWidgetFocus(mainwindow, 1);
   TXT_SetWidgetFocus(infowindow, 1);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Video"),
@@ -446,6 +449,7 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button3, "pressed", GetControlJoystick, "Joystick");
     TXT_SignalConnect(button3, "pressed", ClosePwnBox, window);
     
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(27, 3, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -488,6 +492,7 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", GetControl, "Keyboard");
     }
     
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(27, 3, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -585,6 +590,7 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
     }
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(27, 8, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -664,6 +670,7 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 6, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -727,6 +734,7 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     if (setupflag)
     TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 4, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -816,6 +824,7 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 7, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -947,6 +956,7 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
     }
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 12, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -1048,6 +1058,7 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(20, 8, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -1179,6 +1190,7 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", FXCard, NULL);
     }
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 12, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -1270,6 +1282,7 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", FXCard, NULL);
     }
 
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 7, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -1372,6 +1385,7 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     if (setupflag)
         TXT_SignalConnect(close_button, "pressed", FXCard, NULL);
         
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(28, 9, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -1380,7 +1394,6 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
 /////////////////////////////////////////////////////////Main Menu/////////////////////////////////////////////////////////
 void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
 {
-    txt_window_t *window;
     txt_button_t *button1;
     txt_button_t* button2;
     txt_button_t* button3;
@@ -1391,8 +1404,8 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     txt_window_action_t* close_button;
     txt_window_action_t* accept_button;
 
-    window = TXT_NewWindow("Main Menu                ");
-    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 10);
+    mainwindow = TXT_NewWindow("Main Menu                ");
+    TXT_SetWindowPosition(mainwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 10);
     table = TXT_NewTable(1);
     
     TXT_AddWidgets(table,
@@ -1412,18 +1425,19 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button4, "pressed", ControlButtonConfig, NULL);
     TXT_SignalConnect(button5, "pressed", AdditionalFeatures, NULL);
     TXT_SignalConnect(button6, "pressed", SaveSettings, NULL);
-    TXT_SignalConnect(button6, "pressed", ClosePwnBox, window);
+    TXT_SignalConnect(button6, "pressed", ClosePwnBox, mainwindow);
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, infowindow);
-    TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+    TXT_SignalConnect(close_button, "pressed", ClosePwnBox, mainwindow);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, infowindow);
     
     if(setupflag)
        TXT_SelectWidget(table, button6);
     
+    TXT_SetWidgetFocus(mainwindow, 1);
     TXT_SetWidgetFocus(infowindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 6, table));
-    TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
-    TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
+    TXT_AddWidget(mainwindow, TXT_NewScrollPane(25, 6, table));
+    TXT_SetWindowAction(mainwindow, TXT_HORIZ_LEFT, close_button);
+    TXT_SetWindowAction(mainwindow, TXT_HORIZ_RIGHT, accept_button);
 
     setupflag = 0;
 }
