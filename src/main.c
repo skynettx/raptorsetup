@@ -358,11 +358,11 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
     }
     if (writeflagjoy)                                                     //Save joysticklayout to SETUP.INI
     {
-        if (writeflagjoybfire)
+        if (writeflagjoybfire || writesetupflag)
         INI_PutPreferenceLong("JoyStick", "Fire", joybfireout);
-        if (writeflagjoybchweapon)
+        if (writeflagjoybchweapon || writesetupflag)
         INI_PutPreferenceLong("JoyStick", "FireSp", joybchweaponout);
-        if (writeflagjoybmega)
+        if (writeflagjoybmega || writesetupflag)
         INI_PutPreferenceLong("JoyStick", "ChangeSp", joybmegaout);
 
         INI_PutPreferenceLong("JoyStick", "MegaFire", 3);
@@ -393,7 +393,6 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(infowindow, infotable);
 }
 ////////////////////////////////////////////////Select Additional Features////////////////////////////////////////////////////////
@@ -405,7 +404,6 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   window = TXT_NewWindow("Additional Features                                         ");
   
   TXT_SetWidgetFocus(mainwindow, 1);
-  TXT_SetWidgetFocus(infowindow, 1);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Video"),
   TXT_NewCheckBox("Fullscreen", &fullscreen),
@@ -450,7 +448,6 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button3, "pressed", ClosePwnBox, window);
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(27, 3, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -493,7 +490,6 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
     }
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(27, 3, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -591,7 +587,6 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(27, 8, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -671,7 +666,6 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 6, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -735,7 +729,6 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 4, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -825,7 +818,6 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 7, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -957,7 +949,6 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 12, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -1059,7 +1050,6 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(20, 8, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -1191,7 +1181,6 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 12, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -1283,7 +1272,6 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(25, 7, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -1386,7 +1374,6 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", FXCard, NULL);
         
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(window, TXT_NewScrollPane(28, 9, table));
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
@@ -1434,7 +1421,6 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
        TXT_SelectWidget(table, button6);
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_SetWidgetFocus(infowindow, 1);
     TXT_AddWidget(mainwindow, TXT_NewScrollPane(25, 6, table));
     TXT_SetWindowAction(mainwindow, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(mainwindow, TXT_HORIZ_RIGHT, accept_button);

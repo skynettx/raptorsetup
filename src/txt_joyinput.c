@@ -201,7 +201,10 @@ static void PromptWindowClosed(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(joystick))
 
 static void OpenErrorWindow(void)
 {
-    TXT_MessageBox(NULL, "Please connect a controller first!");
+    txt_window_t* window;
+
+    window = TXT_MessageBox(NULL, "Please connect a controller first!");
+    TXT_SetWidgetFocus(getcontroljoystickwindow, 1);
 }
 
 static void OpenPromptWindow(txt_joystick_input_t* joystick_input)
@@ -237,6 +240,7 @@ static void OpenPromptWindow(txt_joystick_input_t* joystick_input)
     joystick_input->prompt_window = window;
 
     SDL_JoystickEventState(SDL_ENABLE);
+    TXT_SetWidgetFocus(getcontroljoystickwindow, 1);
 }
 
 static void TXT_JoystickInputSizeCalc(TXT_UNCAST_ARG(joystick_input))

@@ -20,6 +20,10 @@
 #include "txt_gui.h"
 #include "txt_desktop.h"
 
+#ifdef _MSC_VER
+#define strdup _strdup
+#endif
+
 typedef struct
 {
     char *signal_name;

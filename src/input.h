@@ -3,6 +3,9 @@
 
 #define arrlen(s) (sizeof(s)/sizeof(*s))
 
+extern txt_window_t* getcontrolkeyboardwindow;
+extern txt_window_t* getcontrolmousewindow;
+extern txt_window_t* getcontroljoystickwindow;
 
 extern int ControllerType;
 extern int key_up_convert, key_down_convert, key_left_convert, key_right_convert, key_fire_convert, key_special_convert, key_mega_convert;

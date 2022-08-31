@@ -18,6 +18,7 @@
 
 #include "doomkeys.h"
 #include "prefapi.h"
+#include "input.h"
 
 #include "txt_mouseinput.h"
 #include "txt_gui.h"
@@ -59,6 +60,8 @@ static void OpenPromptWindow(txt_mouse_input_t* mouse_input)
     window = TXT_MessageBox(NULL, "      Click the new Button      ");
 
     TXT_SetMouseListener(window, MousePressCallback, mouse_input);
+    
+    TXT_SetWidgetFocus(getcontrolmousewindow, 1);
 }
 
 static void TXT_MouseInputSizeCalc(TXT_UNCAST_ARG(mouse_input))
