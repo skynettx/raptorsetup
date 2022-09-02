@@ -1311,7 +1311,7 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     txt_table_t* table;
 
     window = TXT_NewWindow("Select Music Playback Device");
-    TXT_SetWindowPosition(mainwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 5);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
         button1 = TXT_NewButton("General Midi                "),
