@@ -67,81 +67,81 @@ void CheckSetupSettings(void)
     switch (controltype)
     {
     case 0:
-        textbox_control = "Keyboard                          ";
+        textbox_control = "Keyboard                    ";
         break;
     case 1:
-        textbox_control = "Mouse                             ";
+        textbox_control = "Mouse                       ";
         break;
     case 2:
-        textbox_control = "Joystick                          ";
+        textbox_control = "Joystick                    ";
         break;
     default:
-        textbox_control = "None                              ";
+        textbox_control = "None                        ";
         break;
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     switch (musiccard)
     {
     case 0:
-        textbox_musiccard = "None                              ";
+        textbox_musiccard = "None                        ";
         break;
     case 2:
-        textbox_musiccard = "Adlib                             ";
+        textbox_musiccard = "Adlib                       ";
         break;
     case 3:
-        textbox_musiccard = "Gravis Ultra Sound                ";
+        textbox_musiccard = "Gravis Ultra Sound          ";
         break;
     case 4:
-        textbox_musiccard = "Pro Audio Spectrum                ";
+        textbox_musiccard = "Pro Audio Spectrum          ";
         break;
     case 5:
-        textbox_musiccard = "Sound Blaster                     ";
+        textbox_musiccard = "Sound Blaster               ";
         break;
     case 6:
-        textbox_musiccard = "WaveBlaster                       ";
+        textbox_musiccard = "WaveBlaster                 ";
         break;
     case 7:
-        textbox_musiccard = "Roland Sound Canvas               ";
+        textbox_musiccard = "Roland Sound Canvas         ";
         break;
     case 8:
-        textbox_musiccard = "General Midi                      ";
+        textbox_musiccard = "General Midi                ";
         break;
     case 9:
-        textbox_musiccard = "Sound Blaster AWE 32              ";
+        textbox_musiccard = "Sound Blaster AWE 32        ";
         break;
     default:
-        textbox_musiccard = "None                              ";
+        textbox_musiccard = "None                        ";
         break;
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     switch (soundfxcard)
     {
     case 0:
-        textbox_soundfx = "None                              ";
+        textbox_soundfx = "None                        ";
         break;
     case 1:
-        textbox_soundfx = "PC Speaker                        ";
+        textbox_soundfx = "PC Speaker                  ";
         break;
     case 2:
-        textbox_soundfx = "Adlib                             ";
+        textbox_soundfx = "Adlib                       ";
         break;
     case 3:
-        textbox_soundfx = "Gravis Ultra Sound                ";
+        textbox_soundfx = "Gravis Ultra Sound          ";
         break;
     case 4:
-        textbox_soundfx = "Pro Audio Spectrum                ";
+        textbox_soundfx = "Pro Audio Spectrum          ";
         break;
     case 5:
-        textbox_soundfx = "Sound Blaster                     ";
+        textbox_soundfx = "Sound Blaster               ";
         break;
     case 7:
-        textbox_soundfx = "Roland Sound Canvas               ";
+        textbox_soundfx = "Roland Sound Canvas         ";
         break;
     case 8:
-        textbox_soundfx = "General Midi                      ";
+        textbox_soundfx = "General Midi                ";
         break;
     default:
-        textbox_soundfx = "None                              ";
+        textbox_soundfx = "None                        ";
         break;
     }
 }
@@ -377,7 +377,7 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
     GetSetupSettings();
     CheckSetupSettings();
     
-    infowindow = TXT_NewWindow("Current Configuration                            ");
+    infowindow = TXT_NewWindow("Current Configuration                       ");
     TXT_SetWindowAction(infowindow, TXT_HORIZ_LEFT, NULL);
     TXT_SetWindowAction(infowindow, TXT_HORIZ_RIGHT, NULL);
     TXT_SetWindowPosition(infowindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 2);
@@ -431,11 +431,12 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     txt_button_t* button3;
 
     window = TXT_NewWindow("Controller Configuration   ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 8);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("Keyboard"),
-        button2 = TXT_NewButton("Mouse"),
-        button3 = TXT_NewButton("Joystick"),
+        button1 = TXT_NewButton("Keyboard                   "),
+        button2 = TXT_NewButton("Mouse                      "),
+        button3 = TXT_NewButton("Joystick                   "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -448,7 +449,7 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button3, "pressed", ClosePwnBox, window);
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(27, 3, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -463,12 +464,13 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
     txt_button_t* button2;
     txt_button_t* button3;
 
-    window = TXT_NewWindow("Select Controller Type     ");
+    window = TXT_NewWindow("Select Controller Type      ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 8);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("Keyboard"),
-        button2 = TXT_NewButton("Mouse"),
-        button3 = TXT_NewButton("Joystick"),
+        button1 = TXT_NewButton("Keyboard                    "),
+        button2 = TXT_NewButton("Mouse                       "),
+        button3 = TXT_NewButton("Joystick                    "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -490,7 +492,7 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
     }
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(27, 3, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -510,17 +512,18 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
     txt_button_t* button7;
     txt_button_t* button8;
 
-    window = TXT_NewWindow("Number of Digital Channels");
+    window = TXT_NewWindow("Number of Digital Channels ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 7);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("One"),
-        button2 = TXT_NewButton("Two"),
-        button3 = TXT_NewButton("Three"),
-        button4 = TXT_NewButton("Four"),
-        button5 = TXT_NewButton("Five"),
-        button6 = TXT_NewButton("Six"),
-        button7 = TXT_NewButton("Seven"),
-        button8 = TXT_NewButton("Eight"),
+        button1 = TXT_NewButton("One                        "),
+        button2 = TXT_NewButton("Two                        "),
+        button3 = TXT_NewButton("Three                      "),
+        button4 = TXT_NewButton("Four                       "),
+        button5 = TXT_NewButton("Five                       "),
+        button6 = TXT_NewButton("Six                        "),
+        button7 = TXT_NewButton("Seven                      "),
+        button8 = TXT_NewButton("Eight                      "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -587,7 +590,7 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(27, 8, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -605,15 +608,16 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
     txt_button_t* button5;
     txt_button_t* button6;
 
-    window = TXT_NewWindow("Available DMA Channels  ");
+    window = TXT_NewWindow("Available DMA Channels     ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 6);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("0"),
-        button2 = TXT_NewButton("1"),
-        button3 = TXT_NewButton("3"),
-        button4 = TXT_NewButton("5"),
-        button5 = TXT_NewButton("6"),
-        button6 = TXT_NewButton("7"),
+        button1 = TXT_NewButton("0                          "),
+        button2 = TXT_NewButton("1                          "),
+        button3 = TXT_NewButton("3                          "),
+        button4 = TXT_NewButton("5                          "),
+        button5 = TXT_NewButton("6                          "),
+        button6 = TXT_NewButton("7                          "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -666,7 +670,7 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 6, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -682,13 +686,14 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     txt_button_t* button3;
     txt_button_t* button4;
 
-    window = TXT_NewWindow("Available IRQs          ");
+    window = TXT_NewWindow("Available IRQs             ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 8);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("2"),
-        button2 = TXT_NewButton("5"),
-        button3 = TXT_NewButton("7"),
-        button4 = TXT_NewButton("10"),
+        button1 = TXT_NewButton("2                          "),
+        button2 = TXT_NewButton("5                          "),
+        button3 = TXT_NewButton("7                          "),
+        button4 = TXT_NewButton("10                         "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -729,7 +734,7 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 4, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -750,16 +755,17 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
 
     GetSoundcard(0, user_data);
 
-    window = TXT_NewWindow("Available PORTs          ");
+    window = TXT_NewWindow("Available PORTs            ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 6);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("210"),
-        button2 = TXT_NewButton("220"),
-        button3 = TXT_NewButton("230"),
-        button4 = TXT_NewButton("240"),
-        button5 = TXT_NewButton("250"),
-        button6 = TXT_NewButton("260"),
-        button7 = TXT_NewButton("280"),
+        button1 = TXT_NewButton("210                        "),
+        button2 = TXT_NewButton("220                        "),
+        button3 = TXT_NewButton("230                        "),
+        button4 = TXT_NewButton("240                        "),
+        button5 = TXT_NewButton("250                        "),
+        button6 = TXT_NewButton("260                        "),
+        button7 = TXT_NewButton("280                        "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -818,7 +824,7 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 7, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -844,21 +850,22 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
 
     GetSoundcard(0, user_data);
 
-    window = TXT_NewWindow("Available MIDI Ports     ");
+    window = TXT_NewWindow("Available MIDI Ports       ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 3);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("220"),
-        button2 = TXT_NewButton("230"),
-        button3 = TXT_NewButton("240"),
-        button4 = TXT_NewButton("250"),
-        button5 = TXT_NewButton("300"),
-        button6 = TXT_NewButton("320"),
-        button7 = TXT_NewButton("330"),
-        button8 = TXT_NewButton("332"),
-        button9 = TXT_NewButton("334"),
-        button10 = TXT_NewButton("336"),
-        button11 = TXT_NewButton("340"),
-        button12 = TXT_NewButton("360"),
+        button1 = TXT_NewButton("220                        "),
+        button2 = TXT_NewButton("230                        "),
+        button3 = TXT_NewButton("240                        "),
+        button4 = TXT_NewButton("250                        "),
+        button5 = TXT_NewButton("300                        "),
+        button6 = TXT_NewButton("320                        "),
+        button7 = TXT_NewButton("330                        "),
+        button8 = TXT_NewButton("332                        "),
+        button9 = TXT_NewButton("334                        "),
+        button10 = TXT_NewButton("336                        "),
+        button11 = TXT_NewButton("340                        "),
+        button12 = TXT_NewButton("360                        "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -949,7 +956,7 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 12, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -981,17 +988,18 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
     txt_button_t* button7;
     txt_button_t* button8;
 
-    window = TXT_NewWindow("Select Sound FX Device ");
+    window = TXT_NewWindow("Select Sound FX Device   ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 5);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("General Midi"),
-        button2 = TXT_NewButton("Sound Canvas"),
-        button3 = TXT_NewButton("Sound Blaster"),
-        button4 = TXT_NewButton("Pro Audio Spectrum"),
-        button5 = TXT_NewButton("UltraSound"),
-        button6 = TXT_NewButton("Adlib"),
-        button7 = TXT_NewButton("PC Speaker"),
-        button8 = TXT_NewButton("NONE"),
+        button1 = TXT_NewButton("General Midi             "),
+        button2 = TXT_NewButton("Sound Canvas             "),
+        button3 = TXT_NewButton("Sound Blaster            "),
+        button4 = TXT_NewButton("Pro Audio Spectrum       "),
+        button5 = TXT_NewButton("UltraSound               "),
+        button6 = TXT_NewButton("Adlib                    "),
+        button7 = TXT_NewButton("PC Speaker               "),
+        button8 = TXT_NewButton("NONE                     "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -1050,7 +1058,7 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", MainMenu, NULL);
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(20, 8, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -1076,21 +1084,22 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
 
     GetMusiccard(0, user_data);
 
-    window = TXT_NewWindow("Available MIDI Ports     ");
+    window = TXT_NewWindow("Available MIDI Ports       ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 3);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("220"),
-        button2 = TXT_NewButton("230"),
-        button3 = TXT_NewButton("240"),
-        button4 = TXT_NewButton("250"),
-        button5 = TXT_NewButton("300"),
-        button6 = TXT_NewButton("320"),
-        button7 = TXT_NewButton("330"),
-        button8 = TXT_NewButton("332"),
-        button9 = TXT_NewButton("334"),
-        button10 = TXT_NewButton("336"),
-        button11 = TXT_NewButton("340"),
-        button12 = TXT_NewButton("360"),
+        button1 = TXT_NewButton("220                        "),
+        button2 = TXT_NewButton("230                        "),
+        button3 = TXT_NewButton("240                        "),
+        button4 = TXT_NewButton("250                        "),
+        button5 = TXT_NewButton("300                        "),
+        button6 = TXT_NewButton("320                        "),
+        button7 = TXT_NewButton("330                        "),
+        button8 = TXT_NewButton("332                        "),
+        button9 = TXT_NewButton("334                        "),
+        button10 = TXT_NewButton("336                        "),
+        button11 = TXT_NewButton("340                        "),
+        button12 = TXT_NewButton("360                        "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -1181,7 +1190,7 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 12, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -1202,16 +1211,17 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
 
     GetMusiccard(0, user_data);
 
-    window = TXT_NewWindow("Available PORTs          ");
+    window = TXT_NewWindow("Available PORTs            ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 6);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("210"),
-        button2 = TXT_NewButton("220"),
-        button3 = TXT_NewButton("230"),
-        button4 = TXT_NewButton("240"),
-        button5 = TXT_NewButton("250"),
-        button6 = TXT_NewButton("260"),
-        button7 = TXT_NewButton("280"),
+        button1 = TXT_NewButton("210                        "),
+        button2 = TXT_NewButton("220                        "),
+        button3 = TXT_NewButton("230                        "),
+        button4 = TXT_NewButton("240                        "),
+        button5 = TXT_NewButton("250                        "),
+        button6 = TXT_NewButton("260                        "),
+        button7 = TXT_NewButton("280                        "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -1272,7 +1282,7 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(25, 7, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -1301,17 +1311,18 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     txt_table_t* table;
 
     window = TXT_NewWindow("Select Music Playback Device");
+    TXT_SetWindowPosition(mainwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
     table = TXT_NewTable(1);
     TXT_AddWidgets(table,
-        button1 = TXT_NewButton("General Midi"),
-        button2 = TXT_NewButton("Sound Canvas"),
-        button3 = TXT_NewButton("WaveBlaster"),
-        button4 = TXT_NewButton("SB AWE 32"),
-        button5 = TXT_NewButton("Sound Blaster"),
-        button6 = TXT_NewButton("Pro Audio Spectrum"),
-        button7 = TXT_NewButton("UltraSound"),
-        button8 = TXT_NewButton("Adlib"),
-        button9 = TXT_NewButton("NONE"),
+        button1 = TXT_NewButton("General Midi                "),
+        button2 = TXT_NewButton("Sound Canvas                "),
+        button3 = TXT_NewButton("WaveBlaster                 "),
+        button4 = TXT_NewButton("SB AWE 32                   "),
+        button5 = TXT_NewButton("Sound Blaster               "),
+        button6 = TXT_NewButton("Pro Audio Spectrum          "),
+        button7 = TXT_NewButton("UltraSound                  "),
+        button8 = TXT_NewButton("Adlib                       "),
+        button9 = TXT_NewButton("NONE                        "),
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -1374,7 +1385,7 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", FXCard, NULL);
         
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(window, TXT_NewScrollPane(28, 9, table));
+    TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
@@ -1391,17 +1402,17 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     txt_window_action_t* close_button;
     txt_window_action_t* accept_button;
 
-    mainwindow = TXT_NewWindow("Main Menu                ");
-    TXT_SetWindowPosition(mainwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 10);
+    mainwindow = TXT_NewWindow("Main Menu                  ");
+    TXT_SetWindowPosition(mainwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
     table = TXT_NewTable(1);
     
     TXT_AddWidgets(table,
-                   button1 = TXT_NewButton("Select Music Card"),
-                   button2 = TXT_NewButton("Select Sound FX Card"),
-                   button3 = TXT_NewButton("Select Controller Type"),
-                   button4 = TXT_NewButton("Controller Config"),
-                   button5 = TXT_NewButton("Additional Features"),
-                   button6 = TXT_NewButton("Save Settings"),
+                   button1 = TXT_NewButton("Select Music Card          "),
+                   button2 = TXT_NewButton("Select Sound FX Card       "),
+                   button3 = TXT_NewButton("Select Controller Type     "),
+                   button4 = TXT_NewButton("Controller Config          "),
+                   button5 = TXT_NewButton("Additional Features        "),
+                   button6 = TXT_NewButton("Save Settings              "),
                    NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
@@ -1421,7 +1432,8 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
        TXT_SelectWidget(table, button6);
     
     TXT_SetWidgetFocus(mainwindow, 1);
-    TXT_AddWidget(mainwindow, TXT_NewScrollPane(25, 6, table));
+    TXT_AddWidget(mainwindow, table);
+    
     TXT_SetWindowAction(mainwindow, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(mainwindow, TXT_HORIZ_RIGHT, accept_button);
 

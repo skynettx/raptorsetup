@@ -67,17 +67,17 @@ void GetControl(TXT_UNCAST_ARG(widget), void* user_data)
     if (strcmp(user_data, "Keyboard") == 0)
     {
         ControllerType = 1000;
-        textbox_control = "Keyboard                          ";
+        textbox_control = "Keyboard                    ";
     }
     if (strcmp(user_data, "Mouse") == 0)
     {
         ControllerType = 1;
-        textbox_control = "Mouse                             ";
+        textbox_control = "Mouse                       ";
     }
     if (strcmp(user_data, "Joystick") == 0)
     {
         ControllerType = 2;
-        textbox_control = "Joystick                          ";
+        textbox_control = "Joystick                    ";
     }
 
     TXT_ClearTable(infotable);
@@ -236,19 +236,26 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
     }
 
     getcontrolkeyboardwindow = TXT_NewWindow("Keyboard Configuration            ");
-
+    TXT_SetWindowPosition(getcontrolkeyboardwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 3);
+    
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_TABLE_EMPTY);
+    
     TXT_SetTableColumns(getcontrolkeyboardwindow, 2);
     TXT_SetColumnWidths(getcontrolkeyboardwindow, 4, 3);
-    //TXT_AddWidget(window, TXT_TABLE_EMPTY);
-    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator("Movement"));
-    AddKeyControl(getcontrolkeyboardwindow, " Up                ", &key_up);
-    AddKeyControl(getcontrolkeyboardwindow, " Down              ", &key_down);
-    AddKeyControl(getcontrolkeyboardwindow, " Left              ", &key_left);
-    AddKeyControl(getcontrolkeyboardwindow, " Right             ", &key_right);
-    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator("Action"));
-    AddKeyControl(getcontrolkeyboardwindow, " Fire              ", &key_fire);
-    AddKeyControl(getcontrolkeyboardwindow, " Change Special    ", &key_special);
-    AddKeyControl(getcontrolkeyboardwindow, " Mega Bomb         ", &key_mega);
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator(" Movement "));
+    AddKeyControl(getcontrolkeyboardwindow, "  Up               ", &key_up);
+    AddKeyControl(getcontrolkeyboardwindow, "  Down             ", &key_down);
+    AddKeyControl(getcontrolkeyboardwindow, "  Left             ", &key_left);
+    AddKeyControl(getcontrolkeyboardwindow, "  Right            ", &key_right);
+    
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewStrut(0, 1));
+
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator(" Action "));
+    AddKeyControl(getcontrolkeyboardwindow, "  Fire             ", &key_fire);
+    AddKeyControl(getcontrolkeyboardwindow, "  Change Special   ", &key_special);
+    AddKeyControl(getcontrolkeyboardwindow, "  Mega Bomb        ", &key_mega);
+
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewStrut(0, 1));
 
     accept_button = TXT_NewWindowAction(KEY_F10, "Accept");
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
@@ -298,12 +305,11 @@ static void AddMouseControl(TXT_UNCAST_ARG(table), const char* label, int* var)
 
 void SaveMouseConfig(TXT_UNCAST_ARG(widget), void* user_data)
 {
-    txt_window_t* window;
     
     if ((mousebfire > 2) || (mousebchweapon > 2) || (mousebmega > 2))
     {
-        window = TXT_MessageBox("Error", ("Only LEFT BUTTON, RIGHT BUTTON and MID BUTTON are supported!\n"
-                                 "Please reconfigure mouse buttons before save!"));
+         TXT_MessageBox("Error", ("Only LEFT BUTTON, RIGHT BUTTON and MID BUTTON are supported!\n"
+                                  "Please reconfigure mouse buttons before save!"));
         
         writeflagmouse = 0;
 
@@ -320,12 +326,17 @@ void GetControlMouse(TXT_UNCAST_ARG(widget), void* user_data)
     txt_window_action_t* select_button;
 
     getcontrolmousewindow = TXT_NewWindow("Mouse Configuration                ");
+    TXT_SetWindowPosition(getcontrolmousewindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 41, 5);
 
+    TXT_AddWidget(getcontrolmousewindow, TXT_NewStrut(0, 1));
+    
     TXT_SetTableColumns(getcontrolmousewindow, 2);
 
-    AddMouseControl(getcontrolmousewindow, " Fire              ", &mousebfire);
-    AddMouseControl(getcontrolmousewindow, " Change Weapon     ", &mousebchweapon);
-    AddMouseControl(getcontrolmousewindow, " Mega Bomb         ", &mousebmega);
+    AddMouseControl(getcontrolmousewindow, " Fire            ", &mousebfire);
+    AddMouseControl(getcontrolmousewindow, " Change Weapon   ", &mousebchweapon);
+    AddMouseControl(getcontrolmousewindow, " Mega Bomb       ", &mousebmega);
+
+    TXT_AddWidget(getcontrolmousewindow, TXT_NewStrut(0, 1));
 
     accept_button = TXT_NewWindowAction(KEY_F10, "Accept");
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
@@ -357,12 +368,10 @@ static void AddJoystickControl(TXT_UNCAST_ARG(table), const char* label, int* va
 
 void SaveJoyConfig(TXT_UNCAST_ARG(widget), void* user_data)
 {
-    txt_window_t* window;
-    
     if ((joybfireout > 3) || (joybchweaponout > 3) || (joybmegaout > 3))
     {
-        window = TXT_MessageBox("Error", ("Only BUTTON 1, BUTTON 2, BUTTON 3 and BUTTON 4 are supported!\n"
-                       "Please reconfigure joystick/gamepad buttons before save!"));
+         TXT_MessageBox("Error", ("Only BUTTON 1, BUTTON 2, BUTTON 3 and BUTTON 4 are supported!\n"
+                        "Please reconfigure joystick/gamepad buttons before save!"));
 
         writeflagjoy = 0;
 
@@ -386,13 +395,18 @@ void GetControlJoystick(TXT_UNCAST_ARG(widget), void* user_data)
     joybmegaout = joybmega;
 
     getcontroljoystickwindow = TXT_NewWindow("Joystick/Gamepad Config            ");
+    TXT_SetWindowPosition(getcontroljoystickwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 7);
 
+    TXT_AddWidget(getcontroljoystickwindow, TXT_NewStrut(0, 1));
+    
     TXT_SetTableColumns(getcontroljoystickwindow, 2);
 
-    AddJoystickControl(getcontroljoystickwindow, "Fire               ", &joybfire);
-    AddJoystickControl(getcontroljoystickwindow, "Change Special     ", &joybchweapon);
-    AddJoystickControl(getcontroljoystickwindow, "Mega               ", &joybmega);
+    AddJoystickControl(getcontroljoystickwindow, "    Fire               ", &joybfire);
+    AddJoystickControl(getcontroljoystickwindow, "    Change Special     ", &joybchweapon);
+    AddJoystickControl(getcontroljoystickwindow, "    Mega               ", &joybmega);
 
+    TXT_AddWidget(getcontroljoystickwindow, TXT_NewStrut(0, 1));
+    
     accept_button = TXT_NewWindowAction(KEY_F10, "Accept");
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");

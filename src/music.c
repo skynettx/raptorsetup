@@ -15,47 +15,47 @@ void GetMusiccard(TXT_UNCAST_ARG(widget), void* user_data)
 	if (strcmp(user_data, "General Midi") == 0)
 	{
 		CardType = 8;
-		textbox_musiccard = "General Midi                      ";
+		textbox_musiccard = "General Midi                ";
 	}
 	if (strcmp(user_data, "Roland Sound Canvas") == 0)
 	{
 		CardType = 7;
-		textbox_musiccard = "Roland Sound Canvas               ";
+		textbox_musiccard = "Roland Sound Canvas         ";
 	}
 	if (strcmp(user_data, "WaveBlaster") == 0)
 	{
 		CardType = 6;
-		textbox_musiccard = "WaveBlaster                       ";
+		textbox_musiccard = "WaveBlaster                 ";
 	}
 	if (strcmp(user_data, "Sound Blaster AWE 32") == 0)
 	{
 		CardType = 9;
-		textbox_musiccard = "Sound Blaster AWE 32              ";
+		textbox_musiccard = "Sound Blaster AWE 32        ";
 	}
 	if (strcmp(user_data, "Sound Blaster") == 0)
 	{
 		CardType = 5;
-		textbox_musiccard = "Sound Blaster                     ";
+		textbox_musiccard = "Sound Blaster               ";
 	}
 	if (strcmp(user_data, "Pro Audio Spectrum") == 0)
 	{
 		CardType = 4;
-		textbox_musiccard = "Pro Audio Spectrum                ";
+		textbox_musiccard = "Pro Audio Spectrum          ";
 	}
 	if (strcmp(user_data, "UltraSound") == 0)
 	{
 		CardType = 3;
-		textbox_musiccard = "Gravis Ultra Sound                ";
+		textbox_musiccard = "Gravis Ultra Sound          ";
 	}
 	if (strcmp(user_data, "Adlib") == 0)
 	{
 		CardType = 2;
-		textbox_musiccard = "Adlib                             ";
+		textbox_musiccard = "Adlib                       ";
 	}
 	if (strcmp(user_data, "NONE") == 0)
 	{
 		CardType = 1000;
-		textbox_musiccard = "None                              ";
+		textbox_musiccard = "None                        ";
 	}
 	
 	TXT_ClearTable(infotable);

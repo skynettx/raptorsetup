@@ -17,42 +17,42 @@ void GetSoundcard(TXT_UNCAST_ARG(widget), void* user_data)
 	if (strcmp(user_data, "General Midi") == 0)
 	{
 		SoundCardType = 8;
-		textbox_soundfx = "General Midi                      ";
+		textbox_soundfx = "General Midi                ";
 	}
 	if (strcmp(user_data, "Sound Canvas") == 0)
 	{
 		SoundCardType = 7;
-		textbox_soundfx = "Roland Sound Canvas               ";
+		textbox_soundfx = "Roland Sound Canvas         ";
 	}
 	if (strcmp(user_data, "Sound Blaster") == 0)
 	{
 		SoundCardType = 5;
-		textbox_soundfx = "Sound Blaster                     ";
+		textbox_soundfx = "Sound Blaster               ";
 	}
 	if (strcmp(user_data, "Pro Audio Spectrum") == 0)
 	{
 		SoundCardType = 4;
-		textbox_soundfx = "Pro Audio Spectrum                ";
+		textbox_soundfx = "Pro Audio Spectrum          ";
 	}
 	if (strcmp(user_data, "UltraSound") == 0)
 	{
 		SoundCardType = 3;
-		textbox_soundfx = "Gravis Ultra Sound                ";
+		textbox_soundfx = "Gravis Ultra Sound          ";
 	}
 	if (strcmp(user_data, "Adlib") == 0)
 	{
 		SoundCardType = 2;
-		textbox_soundfx = "Adlib                             ";
+		textbox_soundfx = "Adlib                       ";
 	}
 	if (strcmp(user_data, "PC Speaker") == 0)
 	{
 		SoundCardType = 1;
-		textbox_soundfx = "PC Speaker                        ";
+		textbox_soundfx = "PC Speaker                  ";
 	}
 	if (strcmp(user_data, "NONE") == 0)
 	{
 		SoundCardType = 1000;
-		textbox_soundfx = "None                              ";
+		textbox_soundfx = "None                        ";
 	}
 	
 	TXT_ClearTable(infotable);
