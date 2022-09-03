@@ -377,7 +377,7 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
     GetSetupSettings();
     CheckSetupSettings();
     
-    infowindow = TXT_NewWindow("Current Configuration                       ");
+    infowindow = TXT_NewWindow("Current Configuration:                      ");
     TXT_SetWindowAction(infowindow, TXT_HORIZ_LEFT, NULL);
     TXT_SetWindowAction(infowindow, TXT_HORIZ_RIGHT, NULL);
     TXT_SetWindowPosition(infowindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 2);

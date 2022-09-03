@@ -398,9 +398,9 @@ void GetControlJoystick(TXT_UNCAST_ARG(widget), void* user_data)
     
     TXT_SetTableColumns(getcontroljoystickwindow, 2);
 
-    AddJoystickControl(getcontroljoystickwindow, "    Fire               ", &joybfire);
-    AddJoystickControl(getcontroljoystickwindow, "    Change Special     ", &joybchweapon);
-    AddJoystickControl(getcontroljoystickwindow, "    Mega               ", &joybmega);
+    AddJoystickControl(getcontroljoystickwindow, "    Fire           ", &joybfire);
+    AddJoystickControl(getcontroljoystickwindow, "    Change Special ", &joybchweapon);
+    AddJoystickControl(getcontroljoystickwindow, "    Mega           ", &joybmega);
 
     TXT_AddWidget(getcontroljoystickwindow, TXT_NewStrut(0, 1));
     
