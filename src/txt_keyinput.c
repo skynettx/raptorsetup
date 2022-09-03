@@ -66,7 +66,7 @@ static void ReleaseGrab(TXT_UNCAST_ARG(window), TXT_UNCAST_ARG(unused))
 static void OpenPromptWindow(txt_key_input_t* key_input)
 {
     txt_window_t* window;
-
+    
     // Silently update when the shift button is held down.
 
     key_input->check_conflicts = !TXT_GetModifierState(TXT_MOD_SHIFT);

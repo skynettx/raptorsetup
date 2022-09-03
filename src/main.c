@@ -401,7 +401,7 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   txt_window_t* window;
   sf = stringduplicate(sf);
 
-  window = TXT_NewWindow("Additional Features                                         ");
+  window = TXT_NewWindow("Additional Features                                        ");
   
   TXT_SetWidgetFocus(mainwindow, 1);
   
@@ -413,7 +413,7 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   TXT_NewCheckBox("System Midi", &sys_midi),
   TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port: "), TXT_NewIntInputBox(&alsaclient, 4),
   TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL),
-  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), TXT_NewInputBox(&sf, 35), NULL), NULL);
+  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), TXT_NewFileSelector(&sf, 35, "Select Soundfont:", NULL), NULL), NULL);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
   TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic),
@@ -442,12 +442,9 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetControlKeyboard, "Keyboard");
-    TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button2, "pressed", GetControlMouse, "Mouse");
-    TXT_SignalConnect(button2, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button3, "pressed", GetControlJoystick, "Joystick");
-    TXT_SignalConnect(button3, "pressed", ClosePwnBox, window);
-    
+   
     TXT_SetWidgetFocus(mainwindow, 1);
     TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);

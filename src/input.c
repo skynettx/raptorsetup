@@ -262,11 +262,10 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontrolkeyboardwindow);
-    TXT_SignalConnect(close_button, "pressed", ControlButtonConfig, NULL);
+    
     TXT_SignalConnect(accept_button, "pressed", ClosePwnBox, getcontrolkeyboardwindow);
     TXT_SignalConnect(accept_button, "pressed", ConvertKey, NULL);
-    TXT_SignalConnect(accept_button, "pressed", ControlButtonConfig, NULL);
-
+    
     TXT_SetWindowAction(getcontrolkeyboardwindow, TXT_HORIZ_LEFT, close_button);
     TXT_SetWindowAction(getcontrolkeyboardwindow, TXT_HORIZ_CENTER, select_button);
     TXT_SetWindowAction(getcontrolkeyboardwindow, TXT_HORIZ_RIGHT, accept_button);
@@ -343,10 +342,8 @@ void GetControlMouse(TXT_UNCAST_ARG(widget), void* user_data)
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontrolmousewindow);
-    TXT_SignalConnect(close_button, "pressed", ControlButtonConfig, NULL);
-
+    
     TXT_SignalConnect(accept_button, "pressed", ClosePwnBox, getcontrolmousewindow);
-    TXT_SignalConnect(accept_button, "pressed", ControlButtonConfig, NULL);
     TXT_SignalConnect(accept_button, "pressed", SaveMouseConfig, NULL);
 
     TXT_SetWindowAction(getcontrolmousewindow, TXT_HORIZ_LEFT, close_button);
@@ -412,10 +409,8 @@ void GetControlJoystick(TXT_UNCAST_ARG(widget), void* user_data)
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontroljoystickwindow);
-    TXT_SignalConnect(close_button, "pressed", ControlButtonConfig, NULL);
-
+    
     TXT_SignalConnect(accept_button, "pressed", ClosePwnBox, getcontroljoystickwindow);
-    TXT_SignalConnect(accept_button, "pressed", ControlButtonConfig, NULL);
     TXT_SignalConnect(accept_button, "pressed", SaveJoyConfig, NULL);
 
     TXT_SetWindowAction(getcontroljoystickwindow, TXT_HORIZ_LEFT, close_button);
