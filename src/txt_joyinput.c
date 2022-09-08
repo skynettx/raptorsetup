@@ -233,7 +233,8 @@ static void OpenPromptWindow(txt_joystick_input_t* joystick_input)
 
     // Open the prompt window
 
-    window = TXT_MessageBox(NULL, "      Click the new Button      ");
+    window = TXT_MessageBox(NULL, "     Click the new Button      ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
 
     TXT_SDL_SetEventCallback(EventCallback, joystick_input);
     TXT_SignalConnect(window, "closed", PromptWindowClosed, joystick);
@@ -276,8 +277,8 @@ static void TXT_JoystickInputDrawer(TXT_UNCAST_ARG(joystick_input))
             buf, sizeof(buf));
     }
 
-    TXT_SetWidgetBG(joystick_input);
     TXT_FGColor(TXT_COLOR_BRIGHT_CYAN);
+    TXT_SetWidgetBG(joystick_input);
 
     TXT_DrawString(buf);
 

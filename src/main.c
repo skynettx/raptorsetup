@@ -37,7 +37,7 @@ char g_setup_path[PATH_MAX];
 int controltype;
 int musiccard;
 int soundfxcard;
-int fullscreen, aspect_ratio, haptic, joy_ipt_MenuNew, sys_midi, alsaclient, alsaport;
+int fullscreen, aspect_ratio, txt_fullscreen, haptic, joy_ipt_MenuNew, sys_midi, alsaclient, alsaport;
 int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keymega;
 static char soundfont[128];
 static char* sf;
@@ -166,6 +166,7 @@ void GetSetupSettings(void)
     joybmega = INI_GetPreferenceLong("JoyStick", "ChangeSp", 2);
     fullscreen = INI_GetPreferenceLong("Video", "fullscreen", 0);
     aspect_ratio = INI_GetPreferenceLong("Video", "aspect_ratio_correct", 1);
+    txt_fullscreen = INI_GetPreferenceLong("Video", "txt_fullscreen", 0);
     haptic = INI_GetPreferenceLong("Setup", "Haptic", 1);
     joy_ipt_MenuNew = INI_GetPreferenceLong("Setup", "joy_ipt_MenuNew", 0);
     sys_midi = INI_GetPreferenceLong("Setup", "sys_midi", 0);
@@ -370,11 +371,11 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
 
     INI_PutPreferenceLong("Video", "fullscreen", fullscreen);                          //Save Additional Feature fullscreen to SETUP.INI
     INI_PutPreferenceLong("Video", "aspect_ratio_correct", aspect_ratio);              //Save Additional Feature aspect_ratio_correct to SETUP.INI
+    INI_PutPreferenceLong("Video", "txt_fullscreen", txt_fullscreen);                  //Save Additional Feature txt_fullscreen to SETUP.INI
 }
 /////////////////////////////////////////////////////////Info Window/////////////////////////////////////////////////////////
 void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
 {
-    GetSetupSettings();
     CheckSetupSettings();
     
     infowindow = TXT_NewWindow("Current Configuration:                      ");
@@ -407,13 +408,14 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   
   TXT_AddWidgets(window, TXT_NewSeparator("Video"),
   TXT_NewCheckBox("Fullscreen", &fullscreen),
-  TXT_NewCheckBox("Aspect Ratio", &aspect_ratio), NULL);
+  TXT_NewCheckBox("Aspect Ratio", &aspect_ratio), 
+  TXT_NewCheckBox("Text Mode Fullscreen", &txt_fullscreen), NULL);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
   TXT_NewCheckBox("System Midi", &sys_midi),
   TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port: "), TXT_NewIntInputBox(&alsaclient, 4),
   TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL),
-  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), TXT_NewFileSelector(&sf, 35, "Select Soundfont:", NULL), NULL), NULL);
+  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), TXT_NewInputBox(&sf, 35), NULL), NULL);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
   TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic),
@@ -1439,15 +1441,6 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
 
 int main(int argc, char *argv[])
 {
-
-    if (!TXT_Init())
-    {
-        fprintf(stderr, "Failed to initialise GUI\n");
-        exit(-1);
-    }
-
-    TXT_SetColor(TXT_COLOR_BLUE, 0x04, 0x14, 0x40);
-
     RAP_DataPath();
 
     if (access(RAP_GetSetupPath(), 0))                     //Check setup.ini is in folder
@@ -1457,6 +1450,17 @@ int main(int argc, char *argv[])
     }
 
     INI_InitPreference(RAP_GetSetupPath());
+    GetSetupSettings();
+    
+    TXT_Fullscreen(txt_fullscreen);
+    
+    if (!TXT_Init())
+    {
+        fprintf(stderr, "Failed to initialise GUI\n");
+        exit(-1);
+    }
+
+    TXT_SetColor(TXT_COLOR_BLUE, 0x04, 0x14, 0x40);
 
     TXT_SetDesktopTitle("Raptor Setup ver 1.2                              (c) Cygnus Studios Inc. 1994");
     TXT_SetWindowTitle("Raptor Setup");

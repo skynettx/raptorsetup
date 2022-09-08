@@ -53,11 +53,12 @@ static int MousePressCallback(txt_window_t* window,
 static void OpenPromptWindow(txt_mouse_input_t* mouse_input)
 {
     txt_window_t* window;
-
+    
     // Silently update when the shift key is held down.
     mouse_input->check_conflicts = !TXT_GetModifierState(TXT_MOD_SHIFT);
 
-    window = TXT_MessageBox(NULL, "      Click the new Button      ");
+    window = TXT_MessageBox(NULL, "     Click the new Button      ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
 
     TXT_SetMouseListener(window, MousePressCallback, mouse_input);
     
@@ -108,8 +109,8 @@ static void TXT_MouseInputDrawer(TXT_UNCAST_ARG(mouse_input))
         GetMouseButtonDescription(*mouse_input->variable, buf, sizeof(buf));
     }
 
-    TXT_SetWidgetBG(mouse_input);
     TXT_FGColor(TXT_COLOR_BRIGHT_CYAN);
+    TXT_SetWidgetBG(mouse_input);
 
     TXT_DrawString(buf);
 

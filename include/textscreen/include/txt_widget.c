@@ -316,6 +316,7 @@ void TXT_SetWidgetBG(TXT_UNCAST_ARG(widget))
 
     if (widget->focused)
     {
+        TXT_FGColor(TXT_COLOR_BLACK);
         TXT_BGColor(TXT_COLOR_GREY, 0);
     }
     else if (TXT_HoveringOverWidget(widget))

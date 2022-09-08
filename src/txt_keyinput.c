@@ -115,8 +115,8 @@ static void TXT_KeyInputDrawer(TXT_UNCAST_ARG(key_input))
         TXT_GetKeyDescription(*key_input->variable, buf, sizeof(buf));
     }
 
-    TXT_SetWidgetBG(key_input);
     TXT_FGColor(TXT_COLOR_BRIGHT_CYAN);
+    TXT_SetWidgetBG(key_input);
 
     TXT_DrawString(buf);
 

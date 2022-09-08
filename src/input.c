@@ -235,8 +235,8 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
         convertflagkey = 1;
     }
 
-    getcontrolkeyboardwindow = TXT_NewWindow("Keyboard Configuration            ");
-    TXT_SetWindowPosition(getcontrolkeyboardwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 3);
+    getcontrolkeyboardwindow = TXT_NewWindow("Keyboard Configuration           ");
+    TXT_SetWindowPosition(getcontrolkeyboardwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 3);
     
     TXT_AddWidget(getcontrolkeyboardwindow, TXT_TABLE_EMPTY);
     
@@ -324,8 +324,8 @@ void GetControlMouse(TXT_UNCAST_ARG(widget), void* user_data)
     txt_window_action_t* accept_button;
     txt_window_action_t* select_button;
 
-    getcontrolmousewindow = TXT_NewWindow("Mouse Configuration                ");
-    TXT_SetWindowPosition(getcontrolmousewindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 41, 5);
+    getcontrolmousewindow = TXT_NewWindow("Mouse Configuration              ");
+    TXT_SetWindowPosition(getcontrolmousewindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 5);
 
     TXT_AddWidget(getcontrolmousewindow, TXT_NewStrut(0, 1));
     
@@ -391,8 +391,8 @@ void GetControlJoystick(TXT_UNCAST_ARG(widget), void* user_data)
     if (!joybmegaout)
     joybmegaout = joybmega;
 
-    getcontroljoystickwindow = TXT_NewWindow("Joystick/Gamepad Config            ");
-    TXT_SetWindowPosition(getcontroljoystickwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 7);
+    getcontroljoystickwindow = TXT_NewWindow("Joystick/Gamepad Config          ");
+    TXT_SetWindowPosition(getcontroljoystickwindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 7);
 
     TXT_AddWidget(getcontroljoystickwindow, TXT_NewStrut(0, 1));
     

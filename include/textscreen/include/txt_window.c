@@ -285,7 +285,7 @@ void TXT_LayoutWindow(txt_window_t *window)
     CalcActionAreaSize(window, &actionarea_w, &actionarea_h);
 
     if (actionarea_w > widgets_w)
-        widgets_w = actionarea_w;
+        widgets_w = actionarea_w - 2;
 
     // Set the window size based on widgets_w
 
