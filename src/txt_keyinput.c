@@ -71,8 +71,9 @@ static void OpenPromptWindow(txt_key_input_t* key_input)
 
     key_input->check_conflicts = !TXT_GetModifierState(TXT_MOD_SHIFT);
 
-    window = TXT_MessageBox(NULL, "         Press New Key         ");
-
+    window = TXT_MessageBox(NULL, "        Press New Key         ");
+    TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 11);
+    
     TXT_SetKeyListener(window, KeyPressCallback, key_input);
 
     // Switch to raw input mode while we're grabbing the key.

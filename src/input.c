@@ -248,7 +248,7 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
     AddKeyControl(getcontrolkeyboardwindow, "  Left             ", &key_left);
     AddKeyControl(getcontrolkeyboardwindow, "  Right            ", &key_right);
     
-    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewStrut(0, 1));
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewStrut(0, 2));
 
     TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator(" Action "));
     AddKeyControl(getcontrolkeyboardwindow, "  Fire             ", &key_fire);
