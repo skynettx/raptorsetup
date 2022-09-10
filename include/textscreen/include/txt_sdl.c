@@ -491,10 +491,21 @@ void TXT_GetMousePosition(int *x, int *y)
     
     if (fullscreenflag)
     {
-        origin_x = (window_w - 1280) / 2;
-        origin_y = (window_h - 800) / 2;
-        *x = ((*x - origin_x) * TXT_SCREEN_W) / 1280;
-        *y = ((*y - origin_y) * TXT_SCREEN_H) / 800;
+        if ((strcmp(font->name, "large") == 0))
+        {
+            origin_x = (window_w - (screen_image_w * 2)) / 2;
+            origin_y = (window_h - (screen_image_h * 2)) / 2;
+            *x = ((*x - origin_x) * TXT_SCREEN_W) / (screen_image_w * 2);
+            *y = ((*y - origin_y) * TXT_SCREEN_H) / (screen_image_h * 2);
+        }
+
+        else
+        {
+            origin_x = (window_w - screen_image_w) / 2;
+            origin_y = (window_h - screen_image_h) / 2;
+            *x = ((*x - origin_x) * TXT_SCREEN_W) / screen_image_w;
+            *y = ((*y - origin_y) * TXT_SCREEN_H) / screen_image_h;
+        }
     }
     
     else
