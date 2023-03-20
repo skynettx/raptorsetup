@@ -170,6 +170,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../rsrc/resource.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
 		<Unit filename="../src/common.h" />
 		<Unit filename="../src/input.c">
 			<Option compilerVar="CC" />

@@ -177,6 +177,9 @@
     <ClCompile Include="..\src\txt_keyinput.c" />
     <ClCompile Include="..\src\txt_mouseinput.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\rsrc\resource.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
