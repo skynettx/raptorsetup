@@ -5,15 +5,10 @@
 #ifdef _WIN32
 #include <io.h>
 #endif // _WIN32
-#ifdef __linux__
-#include <unistd.h>
-#include <sys/io.h>
-#define PATH_MAX        4096
-#endif // __linux__
-#ifdef __APPLE__
+#ifdef __GNUC__
 #include <unistd.h>
 #define PATH_MAX        4096
-#endif // __APPLE__
+#endif // __GNUC__
 
 #include "textscreen.h"
 #include "prefapi.h"
@@ -25,7 +20,7 @@
 #ifdef _MSC_VER
 #define PATH_MAX        4096
 #define access _access
-#endif
+#endif // _MSC_VER
 
 int setupflag, writesetupflag;
 char* textbox_control = NULL;

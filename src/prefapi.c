@@ -8,22 +8,19 @@
 #ifdef _WIN32
 #include <io.h>
 #endif // _WIN32
-#ifdef __linux__
-#include <sys/io.h>
-#endif // __linux__
 #ifdef __GNUC__
 #include <unistd.h>
 char* ltoa(long i, char* s, int dummy_radix) {
     sprintf(s, "%ld", i);
     return s;
 }
-#endif
+#endif // __GNUC__
 #ifdef _MSC_VER
 #include <windows.h>
 #define PATH_MAX MAX_PATH
 #define access _access
 #define ltoa _ltoa
-#endif
+#endif // _MSC_VER
 
 static int INI_OpenFile(const char *section, const char *key, const char *defaultValue, char *value, int length, const char *filename)
 {
