@@ -3,7 +3,7 @@ Creates and edits the SETUP.INI config file for Raptor Call Of The Shadows DOS v
 with additional features for the reverse-engineered source port Raptor as well.
 This tool based on the awesome libtextscreen from chocolate-doom.
 
-![Alt text](https://imgur.com/hCShMSr.jpg "Raptor Setup")
+![Alt text](https://imgur.com/Lo5FQQu.jpg "Raptor Setup")
 ## Build
 The project supports the compilers msvc, gcc and clang. Supported architectures are 32 bit and 64 bit
 for Windows, Linux and macOS. When you have installed git on your system you can clone the repository 
