@@ -16,6 +16,7 @@
 #include "music.h"
 #include "sound.h"
 #include "input.h"
+#include "help.h"
 
 #ifdef _MSC_VER
 #define PATH_MAX        4096
@@ -48,6 +49,13 @@ char* stringduplicate(const char* source)
         return NULL;
     strcpy(destination, source);
     return destination;
+}
+
+void WindowSelect(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window))
+{
+    TXT_CAST_ARG(txt_window_t, window);
+
+    TXT_WidgetKeyPress(window, KEY_ENTER);
 }
 
 void ClosePwnBox(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window))
@@ -395,26 +403,78 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
 void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 {
   txt_window_t* window;
+  
+  txt_window_action_t* close_button;
+  txt_window_action_t* accept_button;
+
+  txt_checkbox_t* fullscreenbox;
+  txt_checkbox_t* aspectratiobox;
+  txt_checkbox_t* textmodefullbox;
+  
+  txt_checkbox_t* systemmidibox;
+  txt_inputbox_t* alsaclientbox;
+  txt_inputbox_t* alsaportbox;
+  txt_inputbox_t* sfbox;
+
+  txt_checkbox_t* hapticbox;
+  txt_checkbox_t* menunewbox;
+
+  fullscreenbox = TXT_NewCheckBox("Fullscreen", &fullscreen);
+  aspectratiobox = TXT_NewCheckBox("Aspect Ratio", &aspect_ratio);
+  textmodefullbox = TXT_NewCheckBox("Text Mode Fullscreen", &txt_fullscreen);
+  
+  systemmidibox = TXT_NewCheckBox("System Midi", &sys_midi);
+  alsaclientbox = TXT_NewIntInputBox(&alsaclient, 4);
+  alsaportbox = TXT_NewIntInputBox(&alsaport, 1);
+  sfbox = TXT_NewInputBox(&sf, 35);
+
+  hapticbox = TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic);
+  menunewbox = TXT_NewCheckBox("New Joystick Menu Input", &joy_ipt_MenuNew);
+
   sf = stringduplicate(sf);
 
   window = TXT_NewWindow("Additional Features                                        ");
   
+  accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
+  close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+  
   TXT_SetWidgetFocus(mainwindow, 1);
   
   TXT_AddWidgets(window, TXT_NewSeparator("Video"),
-  TXT_NewCheckBox("Fullscreen", &fullscreen),
-  TXT_NewCheckBox("Aspect Ratio", &aspect_ratio), 
-  TXT_NewCheckBox("Text Mode Fullscreen", &txt_fullscreen), NULL);
+  fullscreenbox,
+  aspectratiobox,
+  textmodefullbox, NULL);
   
+  TXT_SignalConnect(fullscreenbox, "helplabel", AdditionalFeaturesHelp, "Select Fullscreen");
+  TXT_SignalConnect(aspectratiobox, "helplabel", AdditionalFeaturesHelp, "Select Aspect Ratio");
+  TXT_SignalConnect(textmodefullbox, "helplabel", AdditionalFeaturesHelp, "Select Text Mode Fullscreen");
+
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
-  TXT_NewCheckBox("System Midi", &sys_midi),
-  TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port: "), TXT_NewIntInputBox(&alsaclient, 4),
-  TXT_NewLabel(":"), TXT_NewIntInputBox(&alsaport, 1), TXT_NewLabel(" (Default = 128:0)"), NULL),
-  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), TXT_NewInputBox(&sf, 35), NULL), NULL);
+  systemmidibox,
+  TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port: "), alsaclientbox,
+  TXT_NewLabel(":"), alsaportbox, TXT_NewLabel(" (Default = 128:0)"), NULL),
+  TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), sfbox, NULL), NULL);
+
+  TXT_SignalConnect(systemmidibox, "helplabel", AdditionalFeaturesHelp, "Select System Midi");
+  TXT_SignalConnect(alsaclientbox, "helplabel", AdditionalFeaturesHelp, "Select Alsa Client");
+  TXT_SignalConnect(alsaportbox, "helplabel", AdditionalFeaturesHelp, "Select Alsa Port");
+  TXT_SignalConnect(sfbox, "helplabel", AdditionalFeaturesHelp, "Type in Soundfont");
   
   TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
-  TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic),
-  TXT_NewCheckBox("New Joystick Menu Input", &joy_ipt_MenuNew), NULL);
+  hapticbox,
+  menunewbox, NULL);
+
+  TXT_SignalConnect(hapticbox, "helplabel", AdditionalFeaturesHelp, "Select Haptic");
+  TXT_SignalConnect(menunewbox, "helplabel", AdditionalFeaturesHelp, "Select New Joystick Menu Input");
+
+  TXT_SignalConnect(close_button, "helplabel", AdditionalFeaturesHelp, "Abort");
+  TXT_SignalConnect(accept_button, "helplabel", AdditionalFeaturesHelp, "Accept");
+
+  TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+  TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
+
+  TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
+  TXT_SetWindowAction(window, TXT_HORIZ_RIGHT, accept_button);
 }
 ////////////////////////////////////////////////Select ControlButtonConfigMain////////////////////////////////////////////////////
 void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
@@ -438,10 +498,18 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(button1, "pressed", GetControlKeyboard, "Keyboard");
     TXT_SignalConnect(button2, "pressed", GetControlMouse, "Mouse");
     TXT_SignalConnect(button3, "pressed", GetControlJoystick, "Joystick");
    
+    TXT_SignalConnect(button1, "helplabel", ControlButtonConfigHelp, "Config Keyboard");
+    TXT_SignalConnect(button2, "helplabel", ControlButtonConfigHelp, "Config Mouse");
+    TXT_SignalConnect(button3, "helplabel", ControlButtonConfigHelp, "Config Joystick");
+
+    TXT_SignalConnect(close_button, "helplabel", ControlButtonConfigHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", ControlButtonConfigHelp, "Accept");
+
     TXT_SetWidgetFocus(mainwindow, 1);
     TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -469,12 +537,19 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(button1, "pressed", GetControl, "Keyboard");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button2, "pressed", GetControl, "Mouse");
     TXT_SignalConnect(button2, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button3, "pressed", GetControl, "Joystick");
     TXT_SignalConnect(button3, "pressed", ClosePwnBox, window);
+
+    TXT_SetHelpLabel(" Use Keyboard for All Controls");
+
+    TXT_SignalConnect(button1, "helplabel", ControlHelp, "Keyboard");
+    TXT_SignalConnect(button2, "helplabel", ControlHelp, "Mouse");
+    TXT_SignalConnect(button3, "helplabel", ControlHelp, "Joystick");
 
     if (setupflag)
     {
@@ -485,6 +560,9 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", GetControl, "Keyboard");
     }
     
+    TXT_SignalConnect(close_button, "helplabel", ControlHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", ControlHelp, "Accept");
+
     TXT_SetWidgetFocus(mainwindow, 1);
     TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -521,6 +599,7 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetSoundChannels, "One");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
@@ -538,6 +617,17 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button8, "pressed", GetSoundChannels, "Eight");
     TXT_SignalConnect(button8, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", SoundCardChannelsHelp, "One");
+    TXT_SignalConnect(button2, "helplabel", SoundCardChannelsHelp, "Two");
+    TXT_SignalConnect(button3, "helplabel", SoundCardChannelsHelp, "Three");
+    TXT_SignalConnect(button4, "helplabel", SoundCardChannelsHelp, "Four");
+    TXT_SignalConnect(button5, "helplabel", SoundCardChannelsHelp, "Five");
+    TXT_SignalConnect(button6, "helplabel", SoundCardChannelsHelp, "Six");
+    TXT_SignalConnect(button7, "helplabel", SoundCardChannelsHelp, "Seven");
+    TXT_SignalConnect(button8, "helplabel", SoundCardChannelsHelp, "Eight");
+    TXT_SignalConnect(close_button, "helplabel", SoundCardChannelsHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", SoundCardChannelsHelp, "Accept");
 
     switch (SoundChannels)
     {
@@ -615,6 +705,7 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetSoundDma, "0");
     TXT_SignalConnect(button1, "pressed", SoundCardChannels, NULL);
@@ -634,6 +725,15 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button6, "pressed", GetSoundDma, "7");
     TXT_SignalConnect(button6, "pressed", SoundCardChannels, NULL);
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", SoundCardDmaHelp, "0");
+    TXT_SignalConnect(button2, "helplabel", SoundCardDmaHelp, "1");
+    TXT_SignalConnect(button3, "helplabel", SoundCardDmaHelp, "3");
+    TXT_SignalConnect(button4, "helplabel", SoundCardDmaHelp, "5");
+    TXT_SignalConnect(button5, "helplabel", SoundCardDmaHelp, "6");
+    TXT_SignalConnect(button6, "helplabel", SoundCardDmaHelp, "7");
+    TXT_SignalConnect(close_button, "helplabel", SoundCardDmaHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", SoundCardDmaHelp, "Accept");
 
     switch (SoundDma)
     {
@@ -691,6 +791,7 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetSoundIrq, "2");
     TXT_SignalConnect(button1, "pressed", SoundCardDma, NULL);
@@ -704,6 +805,13 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button4, "pressed", GetSoundIrq, "10");
     TXT_SignalConnect(button4, "pressed", SoundCardDma, NULL);
     TXT_SignalConnect(button4, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", SoundCardIrqHelp, "2");
+    TXT_SignalConnect(button2, "helplabel", SoundCardIrqHelp, "5");
+    TXT_SignalConnect(button3, "helplabel", SoundCardIrqHelp, "7");
+    TXT_SignalConnect(button4, "helplabel", SoundCardIrqHelp, "10");
+    TXT_SignalConnect(close_button, "helplabel", SoundCardIrqHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", SoundCardIrqHelp, "Accept");
 
     switch (SoundIrq)
     {
@@ -763,6 +871,7 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetSoundBasePort, "210");
     TXT_SignalConnect(button1, "pressed", SoundCardIrq, NULL);
@@ -785,6 +894,16 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", GetSoundBasePort, "280");
     TXT_SignalConnect(button7, "pressed", SoundCardIrq, NULL);
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", SoundCardSBHelp, "210");
+    TXT_SignalConnect(button2, "helplabel", SoundCardSBHelp, "220");
+    TXT_SignalConnect(button3, "helplabel", SoundCardSBHelp, "230");
+    TXT_SignalConnect(button4, "helplabel", SoundCardSBHelp, "240");
+    TXT_SignalConnect(button5, "helplabel", SoundCardSBHelp, "250");
+    TXT_SignalConnect(button6, "helplabel", SoundCardSBHelp, "260");
+    TXT_SignalConnect(button7, "helplabel", SoundCardSBHelp, "280");
+    TXT_SignalConnect(close_button, "helplabel", SoundCardSBHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", SoundCardSBHelp, "Accept");
 
     switch (SoundBasePort)
     {
@@ -863,6 +982,7 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetSoundGMPort, "220");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
@@ -888,6 +1008,21 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button11, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button12, "pressed", GetSoundGMPort, "360");
     TXT_SignalConnect(button12, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", SoundCardGMHelp, "220");
+    TXT_SignalConnect(button2, "helplabel", SoundCardGMHelp, "230");
+    TXT_SignalConnect(button3, "helplabel", SoundCardGMHelp, "240");
+    TXT_SignalConnect(button4, "helplabel", SoundCardGMHelp, "250");
+    TXT_SignalConnect(button5, "helplabel", SoundCardGMHelp, "300");
+    TXT_SignalConnect(button6, "helplabel", SoundCardGMHelp, "320");
+    TXT_SignalConnect(button7, "helplabel", SoundCardGMHelp, "330");
+    TXT_SignalConnect(button8, "helplabel", SoundCardGMHelp, "332");
+    TXT_SignalConnect(button9, "helplabel", SoundCardGMHelp, "334");
+    TXT_SignalConnect(button10, "helplabel", SoundCardGMHelp, "336");
+    TXT_SignalConnect(button11, "helplabel", SoundCardGMHelp, "340");
+    TXT_SignalConnect(button12, "helplabel", SoundCardGMHelp, "360");
+    TXT_SignalConnect(close_button, "helplabel", SoundCardGMHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", SoundCardGMHelp, "Accept");
 
     switch (SoundMidiPort)
     {
@@ -997,6 +1132,7 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", SoundCardGM, "General Midi");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
@@ -1016,6 +1152,17 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button8, "pressed", SoundCardAdPCNo, "NONE");
     TXT_SignalConnect(button8, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", FXCardHelp, "General Midi");
+    TXT_SignalConnect(button2, "helplabel", FXCardHelp, "Sound Canvas");
+    TXT_SignalConnect(button3, "helplabel", FXCardHelp, "Sound Blaster");
+    TXT_SignalConnect(button4, "helplabel", FXCardHelp, "Pro Audio Spectrum");
+    TXT_SignalConnect(button5, "helplabel", FXCardHelp, "UltraSound");
+    TXT_SignalConnect(button6, "helplabel", FXCardHelp, "Adlib");
+    TXT_SignalConnect(button7, "helplabel", FXCardHelp, "PC Speaker");
+    TXT_SignalConnect(button8, "helplabel", FXCardHelp, "NONE");
+    TXT_SignalConnect(close_button, "helplabel", FXCardHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", FXCardHelp, "Accept");
 
     switch (SoundCardType)
     {
@@ -1097,6 +1244,7 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetMusicGMPort, "220");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
@@ -1122,6 +1270,22 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button11, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button12, "pressed", GetMusicGMPort, "360");
     TXT_SignalConnect(button12, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", MusicCardGMSCWBSB32Help, "220");
+    TXT_SignalConnect(button2, "helplabel", MusicCardGMSCWBSB32Help, "230");
+    TXT_SignalConnect(button3, "helplabel", MusicCardGMSCWBSB32Help, "240");
+    TXT_SignalConnect(button4, "helplabel", MusicCardGMSCWBSB32Help, "250");
+    TXT_SignalConnect(button5, "helplabel", MusicCardGMSCWBSB32Help, "300");
+    TXT_SignalConnect(button6, "helplabel", MusicCardGMSCWBSB32Help, "320");
+    TXT_SignalConnect(button7, "helplabel", MusicCardGMSCWBSB32Help, "330");
+    TXT_SignalConnect(button8, "helplabel", MusicCardGMSCWBSB32Help, "332");
+    TXT_SignalConnect(button9, "helplabel", MusicCardGMSCWBSB32Help, "334");
+    TXT_SignalConnect(button10, "helplabel", MusicCardGMSCWBSB32Help, "336");
+    TXT_SignalConnect(button11, "helplabel", MusicCardGMSCWBSB32Help, "340");
+    TXT_SignalConnect(button12, "helplabel", MusicCardGMSCWBSB32Help, "360");
+
+    TXT_SignalConnect(close_button, "helplabel", MusicCardGMSCWBSB32Help, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", MusicCardGMSCWBSB32Help, "Accept");
 
     switch (MidiPort)
     {
@@ -1219,6 +1383,7 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
         NULL);
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button1, "pressed", GetMusicBasePort, "210");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
@@ -1234,6 +1399,17 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button7, "pressed", GetMusicBasePort, "280");
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
+
+    TXT_SignalConnect(button1, "helplabel", MusicCardSBHelp, "210");
+    TXT_SignalConnect(button2, "helplabel", MusicCardSBHelp, "220");
+    TXT_SignalConnect(button3, "helplabel", MusicCardSBHelp, "230");
+    TXT_SignalConnect(button4, "helplabel", MusicCardSBHelp, "240");
+    TXT_SignalConnect(button5, "helplabel", MusicCardSBHelp, "250");
+    TXT_SignalConnect(button6, "helplabel", MusicCardSBHelp, "260");
+    TXT_SignalConnect(button7, "helplabel", MusicCardSBHelp, "280");
+
+    TXT_SignalConnect(close_button, "helplabel", MusicCardSBHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", MusicCardSBHelp, "Accept");
 
     switch (BasePort)
     {
@@ -1321,6 +1497,7 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     accept_button = TXT_NewWindowAction(KEY_ENTER, "Accept");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
     TXT_SignalConnect(button1, "pressed", MusicCardGMSCWBSB32, "General Midi");
     TXT_SignalConnect(button1, "pressed", ClosePwnBox, window);
     TXT_SignalConnect(button2, "pressed", MusicCardGMSCWBSB32, "Roland Sound Canvas");
@@ -1340,7 +1517,19 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button9, "pressed", MusicCardProUltraADNO, "NONE");
     TXT_SignalConnect(button9, "pressed", ClosePwnBox, window);
 
-    
+    TXT_SignalConnect(button1, "helplabel", MusicCardHelp, "General Midi");
+    TXT_SignalConnect(button2, "helplabel", MusicCardHelp, "Roland Sound Canvas");
+    TXT_SignalConnect(button3, "helplabel", MusicCardHelp, "WaveBlaster");
+    TXT_SignalConnect(button4, "helplabel", MusicCardHelp, "Sound Blaster AWE 32");
+    TXT_SignalConnect(button5, "helplabel", MusicCardHelp, "Sound Blaster");
+    TXT_SignalConnect(button6, "helplabel", MusicCardHelp, "Pro Audio Spectrum");
+    TXT_SignalConnect(button7, "helplabel", MusicCardHelp, "UltraSound");
+    TXT_SignalConnect(button8, "helplabel", MusicCardHelp, "Adlib");
+    TXT_SignalConnect(button9, "helplabel", MusicCardHelp, "NONE");
+
+    TXT_SignalConnect(close_button, "helplabel", MusicCardHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", MusicCardHelp, "Accept");
+
     switch (CardType)
     {
     case 2:
@@ -1421,7 +1610,19 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, infowindow);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, mainwindow);
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, infowindow);
-    
+    TXT_SignalConnect(accept_button, "pressed", WindowSelect, mainwindow);
+
+    TXT_SetHelpLabel(" Select Sound Card that will play Music");
+
+    TXT_SignalConnect(button1, "helplabel", MainMenuHelp, "Select Music Card");
+    TXT_SignalConnect(button2, "helplabel", MainMenuHelp, "Select FX Card");
+    TXT_SignalConnect(button3, "helplabel", MainMenuHelp, "Select Control");
+    TXT_SignalConnect(button4, "helplabel", MainMenuHelp, "Controller Config");
+    TXT_SignalConnect(button5, "helplabel", MainMenuHelp, "Additional Features");
+    TXT_SignalConnect(button6, "helplabel", MainMenuHelp, "Save Settings");
+    TXT_SignalConnect(close_button, "helplabel", MainMenuHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", MainMenuHelp, "Accept");
+
     if(setupflag)
        TXT_SelectWidget(table, button6);
     

@@ -41,6 +41,8 @@ int TXT_WindowKeyPress(txt_window_t *window, int c);
 
 void TXT_SetDesktopTitle(const char *title);
 
+void TXT_SetHelpLabel(const char* title);
+
 /**
  * Exit the currently-running main loop and return from the
  * @ref TXT_GUIMainLoop function.

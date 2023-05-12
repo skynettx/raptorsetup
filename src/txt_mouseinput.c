@@ -19,6 +19,8 @@
 #include "doomkeys.h"
 #include "prefapi.h"
 #include "input.h"
+#include "main.h"
+#include "help.h"
 
 #include "txt_mouseinput.h"
 #include "txt_gui.h"
@@ -53,6 +55,7 @@ static int MousePressCallback(txt_window_t* window,
 static void OpenPromptWindow(txt_mouse_input_t* mouse_input)
 {
     txt_window_t* window;
+    txt_window_action_t* close_button;
     
     // Silently update when the shift key is held down.
     mouse_input->check_conflicts = !TXT_GetModifierState(TXT_MOD_SHIFT);
@@ -60,9 +63,16 @@ static void OpenPromptWindow(txt_mouse_input_t* mouse_input)
     window = TXT_MessageBox(NULL, "     Click the new Button      ");
     TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
 
+    close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+
     TXT_SetMouseListener(window, MousePressCallback, mouse_input);
+
+    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     
     TXT_SetWidgetFocus(getcontrolmousewindow, 1);
+
+    TXT_SetWindowAction(window, TXT_HORIZ_CENTER, close_button);
 }
 
 static void TXT_MouseInputSizeCalc(TXT_UNCAST_ARG(mouse_input))
