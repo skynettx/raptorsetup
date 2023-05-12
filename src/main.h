@@ -15,5 +15,6 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data);
 void FXCard(TXT_UNCAST_ARG(widget), void* user_data);
 void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data);
 void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data);
+void WindowSelect(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window));
 void ClosePwnBox(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window));
 

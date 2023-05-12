@@ -18,6 +18,8 @@
 #include "doomkeys.h"
 #include "prefapi.h"
 #include "input.h"
+#include "main.h"
+#include "help.h"
 
 #include "txt_keyinput.h"
 #include "txt_gui.h"
@@ -66,6 +68,7 @@ static void ReleaseGrab(TXT_UNCAST_ARG(window), TXT_UNCAST_ARG(unused))
 static void OpenPromptWindow(txt_key_input_t* key_input)
 {
     txt_window_t* window;
+    txt_window_action_t* close_button;
     
     // Silently update when the shift button is held down.
 
@@ -74,6 +77,8 @@ static void OpenPromptWindow(txt_key_input_t* key_input)
     window = TXT_MessageBox(NULL, "        Press New Key         ");
     TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 11);
     
+    close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+
     TXT_SetKeyListener(window, KeyPressCallback, key_input);
 
     // Switch to raw input mode while we're grabbing the key.
@@ -87,8 +92,13 @@ static void OpenPromptWindow(txt_key_input_t* key_input)
     //SDL_WM_GrabInput(SDL_GRAB_ON);
     TXT_SignalConnect(window, "closed", ReleaseGrab, NULL);
     
+    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+
     TXT_SetWidgetFocus(window, 0);
     TXT_SetWidgetFocus(getcontrolkeyboardwindow, 1);
+
+    TXT_SetWindowAction(window, TXT_HORIZ_CENTER, close_button);
 }
 
 static void TXT_KeyInputSizeCalc(TXT_UNCAST_ARG(key_input))

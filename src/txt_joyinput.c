@@ -21,7 +21,8 @@
 #include "doomkeys.h"
 #include "input.h"
 #include "prefapi.h"
-
+#include "help.h"
+#include "main.h"
 
 #include "txt_joyinput.h"
 #include "txt_gui.h"
@@ -202,14 +203,24 @@ static void PromptWindowClosed(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(joystick))
 static void OpenErrorWindow(void)
 {
     txt_window_t* window;
+    txt_window_action_t* close_button;
 
     window = TXT_MessageBox(NULL, "Please connect a controller first!");
+    
+    close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+    
+    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+
     TXT_SetWidgetFocus(getcontroljoystickwindow, 1);
+
+    TXT_SetWindowAction(window, TXT_HORIZ_CENTER, close_button);
 }
 
 static void OpenPromptWindow(txt_joystick_input_t* joystick_input)
 {
     txt_window_t* window;
+    txt_window_action_t* close_button;
     SDL_Joystick* joystick;
 
     // Silently update when the shift button is held down.
@@ -236,12 +247,19 @@ static void OpenPromptWindow(txt_joystick_input_t* joystick_input)
     window = TXT_MessageBox(NULL, "     Click the new Button      ");
     TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 39, 10);
 
+    close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+
+    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+
     TXT_SDL_SetEventCallback(EventCallback, joystick_input);
     TXT_SignalConnect(window, "closed", PromptWindowClosed, joystick);
     joystick_input->prompt_window = window;
 
     SDL_JoystickEventState(SDL_ENABLE);
     TXT_SetWidgetFocus(getcontroljoystickwindow, 1);
+
+    TXT_SetWindowAction(window, TXT_HORIZ_CENTER, close_button);
 }
 
 static void TXT_JoystickInputSizeCalc(TXT_UNCAST_ARG(joystick_input))

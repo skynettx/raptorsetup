@@ -8,7 +8,7 @@
 #include "txt_keyinput.h"
 #include "txt_mouseinput.h"
 #include "txt_joyinput.h"
-
+#include "help.h"
 
 int ControllerType;
 
@@ -215,6 +215,28 @@ static void AddKeyControl(TXT_UNCAST_ARG(table), const char* name, int* var)
     TXT_AddWidget(table, key_input);
 
     TXT_SignalConnect(key_input, "set", KeySetCallback, var);
+
+    if (strcmp(name, "  Up               ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Up");
+
+    if (strcmp(name, "  Down             ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Down");
+
+    if (strcmp(name, "  Left             ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Left");
+
+    if (strcmp(name, "  Right            ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Right");
+
+    if (strcmp(name, "  Fire             ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Fire");
+
+    if (strcmp(name, "  Change Special   ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Change Special");
+
+    if (strcmp(name, "  Mega Bomb        ") == 0)
+        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Mega Bomb");
+
 }
 
 void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
@@ -261,8 +283,14 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
+    TXT_SignalConnect(close_button, "helplabel", GetControlKeyboardHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", GetControlKeyboardHelp, "Accept");
+    TXT_SignalConnect(select_button, "helplabel", GetControlKeyboardHelp, "Select");
+
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontrolkeyboardwindow);
     
+    TXT_SignalConnect(select_button, "pressed", WindowSelect, getcontrolkeyboardwindow);
+
     TXT_SignalConnect(accept_button, "pressed", ClosePwnBox, getcontrolkeyboardwindow);
     TXT_SignalConnect(accept_button, "pressed", ConvertKey, NULL);
     
@@ -300,6 +328,15 @@ static void AddMouseControl(TXT_UNCAST_ARG(table), const char* label, int* var)
     TXT_AddWidget(table, mouse_input);
 
     TXT_SignalConnect(mouse_input, "set", MouseSetCallback, var);
+
+    if (strcmp(label, " Fire            ") == 0)
+        TXT_SignalConnect(mouse_input, "helplabel", GetControlMouseHelp, "Select Mouse Fire");
+
+    if (strcmp(label, " Change Weapon   ") == 0)
+        TXT_SignalConnect(mouse_input, "helplabel", GetControlMouseHelp, "Select Mouse Change Weapon");
+
+    if (strcmp(label, " Mega Bomb       ") == 0)
+        TXT_SignalConnect(mouse_input, "helplabel", GetControlMouseHelp, "Select Mouse Mega Bomb");
 }
 
 void SaveMouseConfig(TXT_UNCAST_ARG(widget), void* user_data)
@@ -341,8 +378,14 @@ void GetControlMouse(TXT_UNCAST_ARG(widget), void* user_data)
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
+    TXT_SignalConnect(close_button, "helplabel", GetControlMouseHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", GetControlMouseHelp, "Accept");
+    TXT_SignalConnect(select_button, "helplabel", GetControlMouseHelp, "Select");
+
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontrolmousewindow);
     
+    TXT_SignalConnect(select_button, "pressed", WindowSelect, getcontrolmousewindow);
+
     TXT_SignalConnect(accept_button, "pressed", ClosePwnBox, getcontrolmousewindow);
     TXT_SignalConnect(accept_button, "pressed", SaveMouseConfig, NULL);
 
@@ -361,6 +404,15 @@ static void AddJoystickControl(TXT_UNCAST_ARG(table), const char* label, int* va
     joy_input = TXT_NewJoystickInput(var);
 
     TXT_AddWidget(table, joy_input);
+
+    if (strcmp(label, "    Fire           ") == 0)
+        TXT_SignalConnect(joy_input, "helplabel", GetControlJoystickHelp, "Select Joystick Fire");
+
+    if (strcmp(label, "    Change Special ") == 0)
+        TXT_SignalConnect(joy_input, "helplabel", GetControlJoystickHelp, "Select Joystick Change Special");
+
+    if (strcmp(label, "    Mega           ") == 0)
+        TXT_SignalConnect(joy_input, "helplabel", GetControlJoystickHelp, "Select Joystick Mega");
 }
 
 void SaveJoyConfig(TXT_UNCAST_ARG(widget), void* user_data)
@@ -408,7 +460,13 @@ void GetControlJoystick(TXT_UNCAST_ARG(widget), void* user_data)
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
+    TXT_SignalConnect(close_button, "helplabel", GetControlJoystickHelp, "Abort");
+    TXT_SignalConnect(accept_button, "helplabel", GetControlJoystickHelp, "Accept");
+    TXT_SignalConnect(select_button, "helplabel", GetControlJoystickHelp, "Select");
+
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontroljoystickwindow);
+    
+    TXT_SignalConnect(select_button, "pressed", WindowSelect, getcontroljoystickwindow);
     
     TXT_SignalConnect(accept_button, "pressed", ClosePwnBox, getcontroljoystickwindow);
     TXT_SignalConnect(accept_button, "pressed", SaveJoyConfig, NULL);
