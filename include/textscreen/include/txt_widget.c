@@ -305,7 +305,7 @@ int TXT_HoveringOverWidget(TXT_UNCAST_ARG(widget))
     // Is the mouse cursor within the bounds of the widget?
 
     TXT_GetMousePosition(&x, &y);
-
+    
     return (x >= widget->x && x < widget->x + widget->w
          && y >= widget->y && y < widget->y + widget->h);
 }
@@ -313,15 +313,40 @@ int TXT_HoveringOverWidget(TXT_UNCAST_ARG(widget))
 void TXT_SetWidgetBG(TXT_UNCAST_ARG(widget))
 {
     TXT_CAST_ARG(txt_widget_t, widget);
+    txt_window_t* active_window;
+
+    active_window = TXT_GetActiveWindow();
+
+    // When in active window no widget is hovering or focused deactivate helplabel 
+    
+    if (!TXT_ContainsWidget(active_window, widget))
+    {
+        TXT_SetHelpLabel("");
+    }
 
     if (widget->focused)
     {
         TXT_FGColor(TXT_COLOR_BLACK);
         TXT_BGColor(TXT_COLOR_GREY, 0);
+        
+        // Set helplabel when widget focused
+
+        if (!TXT_HoveringOverWidget(active_window))
+        {
+            TXT_EmitSignal(widget, "helplabel");
+        }
     }
+    
     else if (TXT_HoveringOverWidget(widget))
     {
         TXT_BGColor(TXT_HOVER_BACKGROUND, 0);
+    }
+    
+    if (TXT_HoveringOverWidget(widget))
+    {
+        // Set helplabel when mouse hovering over widget
+        
+        TXT_EmitSignal(widget, "helplabel");
     }
     else
     {

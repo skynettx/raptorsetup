@@ -71,15 +71,15 @@ void TXT_DrawDesktopBackground(const char *title)
 
     p = screendata;
 
-    for (i=0; i<TXT_SCREEN_W; ++i)
+    for (i = 0; i<TXT_SCREEN_W; ++i)
     {
         *p++ = ' ';
         *p++ = TXT_COLOR_BLACK | (TXT_COLOR_GREY << 4);
     }
 
     p = screendata + (TXT_SCREEN_H - 1) * TXT_SCREEN_W * 2;
-
-    for (i=0; i<TXT_SCREEN_W; ++i)
+    
+    for (i = 0; i<TXT_SCREEN_W; ++i)
     {
         *p++ = ' ';
         *p++ = TXT_COLOR_BLACK | (TXT_COLOR_GREY << 4);
