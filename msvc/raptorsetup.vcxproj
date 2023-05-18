@@ -158,7 +158,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common.h" />
-    <ClInclude Include="..\src\help.h" />
     <ClInclude Include="..\src\main.h" />
     <ClInclude Include="..\src\input.h" />
     <ClInclude Include="..\src\music.h" />
@@ -169,7 +168,6 @@
     <ClInclude Include="..\src\txt_mouseinput.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\help.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\input.c" />
     <ClCompile Include="..\src\music.c" />

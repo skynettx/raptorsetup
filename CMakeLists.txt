@@ -20,7 +20,6 @@ add_executable(${CMAKE_PROJECT_NAME}
     src/music.c
     src/prefapi.c
     src/sound.c
-    src/help.c
     src/txt_joyinput.c
     src/txt_keyinput.c
     src/txt_mouseinput.c

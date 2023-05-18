@@ -174,10 +174,6 @@
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="../src/common.h" />
-		<Unit filename="../src/help.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/help.h" />
 		<Unit filename="../src/input.c">
 			<Option compilerVar="CC" />
 		</Unit>

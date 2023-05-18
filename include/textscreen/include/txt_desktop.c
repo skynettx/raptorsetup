@@ -235,7 +235,7 @@ static void DrawHelpIndicator(void)
     TXT_DrawString("=Help ");
 }
 
-void TXT_SetHelpLabel(const char* title)
+void TXT_DrawHelpLabel(const char* title)
 {
     free(help_label);
     help_label = strdup(title);
