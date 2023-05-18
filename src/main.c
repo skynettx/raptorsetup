@@ -16,7 +16,6 @@
 #include "music.h"
 #include "sound.h"
 #include "input.h"
-#include "help.h"
 
 #ifdef _MSC_VER
 #define PATH_MAX        4096
@@ -445,9 +444,9 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   aspectratiobox,
   textmodefullbox, NULL);
   
-  TXT_SignalConnect(fullscreenbox, "helplabel", AdditionalFeaturesHelp, "Select Fullscreen");
-  TXT_SignalConnect(aspectratiobox, "helplabel", AdditionalFeaturesHelp, "Select Aspect Ratio");
-  TXT_SignalConnect(textmodefullbox, "helplabel", AdditionalFeaturesHelp, "Select Text Mode Fullscreen");
+  TXT_SetHelpLabel(fullscreenbox, "Select Fullscreen Mode On / Off");
+  TXT_SetHelpLabel(aspectratiobox, "Select Aspect Ratio Correction On / Off");
+  TXT_SetHelpLabel(textmodefullbox, "Select Text Mode Fullscreen On / Off");
 
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
   systemmidibox,
@@ -455,21 +454,21 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   TXT_NewLabel(":"), alsaportbox, TXT_NewLabel(" (Default = 128:0)"), NULL),
   TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), sfbox, NULL), NULL);
 
-  TXT_SignalConnect(systemmidibox, "helplabel", AdditionalFeaturesHelp, "Select System Midi");
-  TXT_SignalConnect(alsaclientbox, "helplabel", AdditionalFeaturesHelp, "Select Alsa Client");
-  TXT_SignalConnect(alsaportbox, "helplabel", AdditionalFeaturesHelp, "Select Alsa Port");
-  TXT_SignalConnect(sfbox, "helplabel", AdditionalFeaturesHelp, "Type in Soundfont");
+  TXT_SetHelpLabel(systemmidibox, "Select System Midi On / Off");
+  TXT_SetHelpLabel(alsaclientbox, "Enter the Client Number for Alsa Client");
+  TXT_SetHelpLabel(alsaportbox, "Enter the Port Number for Alsa Port");
+  TXT_SetHelpLabel(sfbox, "Enter the file name for the GM compatible soundfont in SF2 format");
   
   TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
   hapticbox,
   menunewbox, NULL);
 
-  TXT_SignalConnect(hapticbox, "helplabel", AdditionalFeaturesHelp, "Select Haptic");
-  TXT_SignalConnect(menunewbox, "helplabel", AdditionalFeaturesHelp, "Select New Joystick Menu Input");
-
-  TXT_SignalConnect(close_button, "helplabel", AdditionalFeaturesHelp, "Abort");
-  TXT_SignalConnect(accept_button, "helplabel", AdditionalFeaturesHelp, "Accept");
-
+  TXT_SetHelpLabel(hapticbox, "Select Haptic for Controller On / Off");
+  TXT_SetHelpLabel(menunewbox, "Select New Joystick Menu Input On / Off");
+  
+  TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+  TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
+  
   TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
   TXT_SignalConnect(accept_button, "pressed", WindowSelect, window);
 
@@ -503,13 +502,13 @@ void ControlButtonConfig(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button2, "pressed", GetControlMouse, "Mouse");
     TXT_SignalConnect(button3, "pressed", GetControlJoystick, "Joystick");
    
-    TXT_SignalConnect(button1, "helplabel", ControlButtonConfigHelp, "Config Keyboard");
-    TXT_SignalConnect(button2, "helplabel", ControlButtonConfigHelp, "Config Mouse");
-    TXT_SignalConnect(button3, "helplabel", ControlButtonConfigHelp, "Config Joystick");
-
-    TXT_SignalConnect(close_button, "helplabel", ControlButtonConfigHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", ControlButtonConfigHelp, "Accept");
-
+    TXT_SetHelpLabel(button1, " Setup New Keyboard Layout");
+    TXT_SetHelpLabel(button2, "Configure Mouse Button Layout");
+    TXT_SetHelpLabel(button3, "Configure Joystick Button Layout");
+    
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
+    
     TXT_SetWidgetFocus(mainwindow, 1);
     TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -545,12 +544,14 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button3, "pressed", GetControl, "Joystick");
     TXT_SignalConnect(button3, "pressed", ClosePwnBox, window);
 
-    TXT_SetHelpLabel(" Use Keyboard for All Controls");
-
-    TXT_SignalConnect(button1, "helplabel", ControlHelp, "Keyboard");
-    TXT_SignalConnect(button2, "helplabel", ControlHelp, "Mouse");
-    TXT_SignalConnect(button3, "helplabel", ControlHelp, "Joystick");
-
+    TXT_DrawHelpLabel(" Use Keyboard for All Controls");
+    
+    TXT_SetHelpLabel(button1, " Use Keyboard for All Controls");
+    TXT_SetHelpLabel(button2, " Use Mouse for Main control");
+    TXT_SetHelpLabel(button3, " Use Joystick for Main control");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
+    
     if (setupflag)
     {
         TXT_SignalConnect(button1, "pressed", MusicCard, NULL);
@@ -560,9 +561,6 @@ void Control(TXT_UNCAST_ARG(widget), void* user_data)
         TXT_SignalConnect(close_button, "pressed", GetControl, "Keyboard");
     }
     
-    TXT_SignalConnect(close_button, "helplabel", ControlHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", ControlHelp, "Accept");
-
     TXT_SetWidgetFocus(mainwindow, 1);
     TXT_AddWidget(window, table);
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, close_button);
@@ -618,16 +616,16 @@ void SoundCardChannels(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button8, "pressed", GetSoundChannels, "Eight");
     TXT_SignalConnect(button8, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", SoundCardChannelsHelp, "One");
-    TXT_SignalConnect(button2, "helplabel", SoundCardChannelsHelp, "Two");
-    TXT_SignalConnect(button3, "helplabel", SoundCardChannelsHelp, "Three");
-    TXT_SignalConnect(button4, "helplabel", SoundCardChannelsHelp, "Four");
-    TXT_SignalConnect(button5, "helplabel", SoundCardChannelsHelp, "Five");
-    TXT_SignalConnect(button6, "helplabel", SoundCardChannelsHelp, "Six");
-    TXT_SignalConnect(button7, "helplabel", SoundCardChannelsHelp, "Seven");
-    TXT_SignalConnect(button8, "helplabel", SoundCardChannelsHelp, "Eight");
-    TXT_SignalConnect(close_button, "helplabel", SoundCardChannelsHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", SoundCardChannelsHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Will play one Digital sound effect at a time");
+    TXT_SetHelpLabel(button2, " Will play two Digital sound effects at a time");
+    TXT_SetHelpLabel(button3, " Will play three Digital sound effects at a time");
+    TXT_SetHelpLabel(button4, " Will play four Digital sound effects at a time");
+    TXT_SetHelpLabel(button5, " Will play five Digital sound effects at a time");
+    TXT_SetHelpLabel(button6, " Will play six Digital sound effects at a time");
+    TXT_SetHelpLabel(button7, " Will play seven Digital sound effects at a time");
+    TXT_SetHelpLabel(button8, " Will play eight Digital sound effects at a time");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     switch (SoundChannels)
     {
@@ -726,14 +724,14 @@ void SoundCardDma(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button6, "pressed", SoundCardChannels, NULL);
     TXT_SignalConnect(button6, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", SoundCardDmaHelp, "0");
-    TXT_SignalConnect(button2, "helplabel", SoundCardDmaHelp, "1");
-    TXT_SignalConnect(button3, "helplabel", SoundCardDmaHelp, "3");
-    TXT_SignalConnect(button4, "helplabel", SoundCardDmaHelp, "5");
-    TXT_SignalConnect(button5, "helplabel", SoundCardDmaHelp, "6");
-    TXT_SignalConnect(button6, "helplabel", SoundCardDmaHelp, "7");
-    TXT_SignalConnect(close_button, "helplabel", SoundCardDmaHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", SoundCardDmaHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Sets DMA to 0");
+    TXT_SetHelpLabel(button2, " Sets DMA to 1");
+    TXT_SetHelpLabel(button3, " Sets DMA to 3");
+    TXT_SetHelpLabel(button4, " Sets DMA to 5");
+    TXT_SetHelpLabel(button5, " Sets DMA to 6");
+    TXT_SetHelpLabel(button6, " Sets DMA to 7");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     switch (SoundDma)
     {
@@ -806,12 +804,12 @@ void SoundCardIrq(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button4, "pressed", SoundCardDma, NULL);
     TXT_SignalConnect(button4, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", SoundCardIrqHelp, "2");
-    TXT_SignalConnect(button2, "helplabel", SoundCardIrqHelp, "5");
-    TXT_SignalConnect(button3, "helplabel", SoundCardIrqHelp, "7");
-    TXT_SignalConnect(button4, "helplabel", SoundCardIrqHelp, "10");
-    TXT_SignalConnect(close_button, "helplabel", SoundCardIrqHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", SoundCardIrqHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Sets IRQ to 2");
+    TXT_SetHelpLabel(button2, " Sets IRQ to 5");
+    TXT_SetHelpLabel(button3, " Sets IRQ to 7");
+    TXT_SetHelpLabel(button4, " Sets IRQ to 10");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     switch (SoundIrq)
     {
@@ -895,16 +893,16 @@ void SoundCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", SoundCardIrq, NULL);
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", SoundCardSBHelp, "210");
-    TXT_SignalConnect(button2, "helplabel", SoundCardSBHelp, "220");
-    TXT_SignalConnect(button3, "helplabel", SoundCardSBHelp, "230");
-    TXT_SignalConnect(button4, "helplabel", SoundCardSBHelp, "240");
-    TXT_SignalConnect(button5, "helplabel", SoundCardSBHelp, "250");
-    TXT_SignalConnect(button6, "helplabel", SoundCardSBHelp, "260");
-    TXT_SignalConnect(button7, "helplabel", SoundCardSBHelp, "280");
-    TXT_SignalConnect(close_button, "helplabel", SoundCardSBHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", SoundCardSBHelp, "Accept");
-
+    TXT_SetHelpLabel(button1, " Sets PORT address to 210");
+    TXT_SetHelpLabel(button2, " Sets PORT address to 220");
+    TXT_SetHelpLabel(button3, " Sets PORT address to 230");
+    TXT_SetHelpLabel(button4, " Sets PORT address to 240");
+    TXT_SetHelpLabel(button5, " Sets PORT address to 250");
+    TXT_SetHelpLabel(button6, " Sets PORT address to 260");
+    TXT_SetHelpLabel(button7, " Sets PORT address to 280");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
+    
     switch (SoundBasePort)
     {
     case 210:
@@ -1009,20 +1007,20 @@ void SoundCardGM(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button12, "pressed", GetSoundGMPort, "360");
     TXT_SignalConnect(button12, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", SoundCardGMHelp, "220");
-    TXT_SignalConnect(button2, "helplabel", SoundCardGMHelp, "230");
-    TXT_SignalConnect(button3, "helplabel", SoundCardGMHelp, "240");
-    TXT_SignalConnect(button4, "helplabel", SoundCardGMHelp, "250");
-    TXT_SignalConnect(button5, "helplabel", SoundCardGMHelp, "300");
-    TXT_SignalConnect(button6, "helplabel", SoundCardGMHelp, "320");
-    TXT_SignalConnect(button7, "helplabel", SoundCardGMHelp, "330");
-    TXT_SignalConnect(button8, "helplabel", SoundCardGMHelp, "332");
-    TXT_SignalConnect(button9, "helplabel", SoundCardGMHelp, "334");
-    TXT_SignalConnect(button10, "helplabel", SoundCardGMHelp, "336");
-    TXT_SignalConnect(button11, "helplabel", SoundCardGMHelp, "340");
-    TXT_SignalConnect(button12, "helplabel", SoundCardGMHelp, "360");
-    TXT_SignalConnect(close_button, "helplabel", SoundCardGMHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", SoundCardGMHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Sets Midi port to 220");
+    TXT_SetHelpLabel(button2, " Sets Midi port to 230");
+    TXT_SetHelpLabel(button3, " Sets Midi port to 240");
+    TXT_SetHelpLabel(button4, " Sets Midi port to 250");
+    TXT_SetHelpLabel(button5, " Sets Midi port to 300");
+    TXT_SetHelpLabel(button6, " Sets Midi port to 320");
+    TXT_SetHelpLabel(button7, " Sets Midi port to 330");
+    TXT_SetHelpLabel(button8, " Sets Midi port to 332");
+    TXT_SetHelpLabel(button9, " Sets Midi port to 334");
+    TXT_SetHelpLabel(button10, " Sets Midi port to 336");
+    TXT_SetHelpLabel(button11, " Sets Midi port to 340");
+    TXT_SetHelpLabel(button12, " Sets Midi port to 360");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     switch (SoundMidiPort)
     {
@@ -1153,16 +1151,16 @@ void FXCard(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button8, "pressed", SoundCardAdPCNo, "NONE");
     TXT_SignalConnect(button8, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", FXCardHelp, "General Midi");
-    TXT_SignalConnect(button2, "helplabel", FXCardHelp, "Sound Canvas");
-    TXT_SignalConnect(button3, "helplabel", FXCardHelp, "Sound Blaster");
-    TXT_SignalConnect(button4, "helplabel", FXCardHelp, "Pro Audio Spectrum");
-    TXT_SignalConnect(button5, "helplabel", FXCardHelp, "UltraSound");
-    TXT_SignalConnect(button6, "helplabel", FXCardHelp, "Adlib");
-    TXT_SignalConnect(button7, "helplabel", FXCardHelp, "PC Speaker");
-    TXT_SignalConnect(button8, "helplabel", FXCardHelp, "NONE");
-    TXT_SignalConnect(close_button, "helplabel", FXCardHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", FXCardHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Select for General Midi Sound FX - MPU-401 General Midi");
+    TXT_SetHelpLabel(button2, " Select for Roland Sound Canvas Sound FX ( Uses Build in FX on card )");
+    TXT_SetHelpLabel(button3, " Digital Sound FX  - Sound Blaster, Pro, 16 and AWE32");
+    TXT_SetHelpLabel(button4, " Digital Sound FX  - Pro Audio Spectrum");
+    TXT_SetHelpLabel(button5, " Gravis UltraSound Digital Sound FX");
+    TXT_SetHelpLabel(button6, " Sound FX ( Adlib and 100% compatibles )");
+    TXT_SetHelpLabel(button7, " PC speaker Sound FX");
+    TXT_SetHelpLabel(button8, " Select for No Sound FX");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     switch (SoundCardType)
     {
@@ -1271,22 +1269,21 @@ void MusicCardGMSCWBSB32(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button12, "pressed", GetMusicGMPort, "360");
     TXT_SignalConnect(button12, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", MusicCardGMSCWBSB32Help, "220");
-    TXT_SignalConnect(button2, "helplabel", MusicCardGMSCWBSB32Help, "230");
-    TXT_SignalConnect(button3, "helplabel", MusicCardGMSCWBSB32Help, "240");
-    TXT_SignalConnect(button4, "helplabel", MusicCardGMSCWBSB32Help, "250");
-    TXT_SignalConnect(button5, "helplabel", MusicCardGMSCWBSB32Help, "300");
-    TXT_SignalConnect(button6, "helplabel", MusicCardGMSCWBSB32Help, "320");
-    TXT_SignalConnect(button7, "helplabel", MusicCardGMSCWBSB32Help, "330");
-    TXT_SignalConnect(button8, "helplabel", MusicCardGMSCWBSB32Help, "332");
-    TXT_SignalConnect(button9, "helplabel", MusicCardGMSCWBSB32Help, "334");
-    TXT_SignalConnect(button10, "helplabel", MusicCardGMSCWBSB32Help, "336");
-    TXT_SignalConnect(button11, "helplabel", MusicCardGMSCWBSB32Help, "340");
-    TXT_SignalConnect(button12, "helplabel", MusicCardGMSCWBSB32Help, "360");
-
-    TXT_SignalConnect(close_button, "helplabel", MusicCardGMSCWBSB32Help, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", MusicCardGMSCWBSB32Help, "Accept");
-
+    TXT_SetHelpLabel(button1, " Sets Midi port to 220");
+    TXT_SetHelpLabel(button2, " Sets Midi port to 230");
+    TXT_SetHelpLabel(button3, " Sets Midi port to 240");
+    TXT_SetHelpLabel(button4, " Sets Midi port to 250");
+    TXT_SetHelpLabel(button5, " Sets Midi port to 300");
+    TXT_SetHelpLabel(button6, " Sets Midi port to 320");
+    TXT_SetHelpLabel(button7, " Sets Midi port to 330");
+    TXT_SetHelpLabel(button8, " Sets Midi port to 332");
+    TXT_SetHelpLabel(button9, " Sets Midi port to 334");
+    TXT_SetHelpLabel(button10, " Sets Midi port to 336");
+    TXT_SetHelpLabel(button11, " Sets Midi port to 340");
+    TXT_SetHelpLabel(button12, " Sets Midi port to 360");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
+    
     switch (MidiPort)
     {
     case 220:
@@ -1400,16 +1397,15 @@ void MusicCardSB(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button7, "pressed", GetMusicBasePort, "280");
     TXT_SignalConnect(button7, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", MusicCardSBHelp, "210");
-    TXT_SignalConnect(button2, "helplabel", MusicCardSBHelp, "220");
-    TXT_SignalConnect(button3, "helplabel", MusicCardSBHelp, "230");
-    TXT_SignalConnect(button4, "helplabel", MusicCardSBHelp, "240");
-    TXT_SignalConnect(button5, "helplabel", MusicCardSBHelp, "250");
-    TXT_SignalConnect(button6, "helplabel", MusicCardSBHelp, "260");
-    TXT_SignalConnect(button7, "helplabel", MusicCardSBHelp, "280");
-
-    TXT_SignalConnect(close_button, "helplabel", MusicCardSBHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", MusicCardSBHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Sets PORT address to 210");
+    TXT_SetHelpLabel(button2, " Sets PORT address to 220");
+    TXT_SetHelpLabel(button3, " Sets PORT address to 230");
+    TXT_SetHelpLabel(button4, " Sets PORT address to 240");
+    TXT_SetHelpLabel(button5, " Sets PORT address to 250");
+    TXT_SetHelpLabel(button6, " Sets PORT address to 260");
+    TXT_SetHelpLabel(button7, " Sets PORT address to 280");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     switch (BasePort)
     {
@@ -1517,19 +1513,18 @@ void MusicCard(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(button9, "pressed", MusicCardProUltraADNO, "NONE");
     TXT_SignalConnect(button9, "pressed", ClosePwnBox, window);
 
-    TXT_SignalConnect(button1, "helplabel", MusicCardHelp, "General Midi");
-    TXT_SignalConnect(button2, "helplabel", MusicCardHelp, "Roland Sound Canvas");
-    TXT_SignalConnect(button3, "helplabel", MusicCardHelp, "WaveBlaster");
-    TXT_SignalConnect(button4, "helplabel", MusicCardHelp, "Sound Blaster AWE 32");
-    TXT_SignalConnect(button5, "helplabel", MusicCardHelp, "Sound Blaster");
-    TXT_SignalConnect(button6, "helplabel", MusicCardHelp, "Pro Audio Spectrum");
-    TXT_SignalConnect(button7, "helplabel", MusicCardHelp, "UltraSound");
-    TXT_SignalConnect(button8, "helplabel", MusicCardHelp, "Adlib");
-    TXT_SignalConnect(button9, "helplabel", MusicCardHelp, "NONE");
-
-    TXT_SignalConnect(close_button, "helplabel", MusicCardHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", MusicCardHelp, "Accept");
-
+    TXT_SetHelpLabel(button1, "MPU-401 General MIDI");
+    TXT_SetHelpLabel(button2, "Roland Sound Canvas");
+    TXT_SetHelpLabel(button3, " WaveBlaster");
+    TXT_SetHelpLabel(button4, " AWE 32 Sound Blaster");
+    TXT_SetHelpLabel(button5, "Sound Blaster, Sound Blaster 16, Sound Blaster AWE32 and Sound Blaster Pro");
+    TXT_SetHelpLabel(button6, " Pro Audio Spectrum");
+    TXT_SetHelpLabel(button7, "Gravis UltraSound");
+    TXT_SetHelpLabel(button8, "Adlib and 100% compatibles");
+    TXT_SetHelpLabel(button9, " Do not use any Sound");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
+    
     switch (CardType)
     {
     case 2:
@@ -1612,16 +1607,16 @@ void MainMenu(TXT_UNCAST_ARG(widget), void* user_data)
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, infowindow);
     TXT_SignalConnect(accept_button, "pressed", WindowSelect, mainwindow);
 
-    TXT_SetHelpLabel(" Select Sound Card that will play Music");
+    TXT_DrawHelpLabel(" Select Sound Card that will play Music");
 
-    TXT_SignalConnect(button1, "helplabel", MainMenuHelp, "Select Music Card");
-    TXT_SignalConnect(button2, "helplabel", MainMenuHelp, "Select FX Card");
-    TXT_SignalConnect(button3, "helplabel", MainMenuHelp, "Select Control");
-    TXT_SignalConnect(button4, "helplabel", MainMenuHelp, "Controller Config");
-    TXT_SignalConnect(button5, "helplabel", MainMenuHelp, "Additional Features");
-    TXT_SignalConnect(button6, "helplabel", MainMenuHelp, "Save Settings");
-    TXT_SignalConnect(close_button, "helplabel", MainMenuHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", MainMenuHelp, "Accept");
+    TXT_SetHelpLabel(button1, " Select Sound Card that will play Music");
+    TXT_SetHelpLabel(button2, " Select Sound Card that will play Sound FX");
+    TXT_SetHelpLabel(button3, " Select Controller Type ( Mouse / Joystick / Keyboard )");
+    TXT_SetHelpLabel(button4, " Configure Keyboard / Mouse / Joystick Layout");
+    TXT_SetHelpLabel(button5, " Configure Additional Features Video / Audio / Input");
+    TXT_SetHelpLabel(button6, " Save Current Settings as Defaults");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press ENTER to Accept");
 
     if(setupflag)
        TXT_SelectWidget(table, button6);

@@ -21,7 +21,6 @@
 #include "doomkeys.h"
 #include "input.h"
 #include "prefapi.h"
-#include "help.h"
 #include "main.h"
 
 #include "txt_joyinput.h"
@@ -209,7 +208,8 @@ static void OpenErrorWindow(void)
     
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
     
-    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
 
     TXT_SetWidgetFocus(getcontroljoystickwindow, 1);
@@ -249,7 +249,8 @@ static void OpenPromptWindow(txt_joystick_input_t* joystick_input)
 
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
-    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
 
     TXT_SDL_SetEventCallback(EventCallback, joystick_input);

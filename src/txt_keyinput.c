@@ -19,7 +19,6 @@
 #include "prefapi.h"
 #include "input.h"
 #include "main.h"
-#include "help.h"
 
 #include "txt_keyinput.h"
 #include "txt_gui.h"
@@ -92,7 +91,8 @@ static void OpenPromptWindow(txt_key_input_t* key_input)
     //SDL_WM_GrabInput(SDL_GRAB_ON);
     TXT_SignalConnect(window, "closed", ReleaseGrab, NULL);
     
-    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
 
     TXT_SetWidgetFocus(window, 0);

@@ -20,7 +20,6 @@
 #include "prefapi.h"
 #include "input.h"
 #include "main.h"
-#include "help.h"
 
 #include "txt_mouseinput.h"
 #include "txt_gui.h"
@@ -67,7 +66,8 @@ static void OpenPromptWindow(txt_mouse_input_t* mouse_input)
 
     TXT_SetMouseListener(window, MousePressCallback, mouse_input);
 
-    TXT_SignalConnect(close_button, "helplabel", InputHelp, "Abort");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
     
     TXT_SetWidgetFocus(getcontrolmousewindow, 1);

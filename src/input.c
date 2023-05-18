@@ -8,7 +8,6 @@
 #include "txt_keyinput.h"
 #include "txt_mouseinput.h"
 #include "txt_joyinput.h"
-#include "help.h"
 
 int ControllerType;
 
@@ -217,26 +216,25 @@ static void AddKeyControl(TXT_UNCAST_ARG(table), const char* name, int* var)
     TXT_SignalConnect(key_input, "set", KeySetCallback, var);
 
     if (strcmp(name, "  Up               ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Up");
-
+        TXT_SetHelpLabel(key_input, "Move ship forward");
+        
     if (strcmp(name, "  Down             ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Down");
-
+        TXT_SetHelpLabel(key_input, "Move ship backwards");
+        
     if (strcmp(name, "  Left             ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Left");
-
+        TXT_SetHelpLabel(key_input, "Move ship to the left");
+        
     if (strcmp(name, "  Right            ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Right");
-
+        TXT_SetHelpLabel(key_input, "Move ship to the right");
+        
     if (strcmp(name, "  Fire             ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Fire");
-
+        TXT_SetHelpLabel(key_input, "Fire main weapons");
+        
     if (strcmp(name, "  Change Special   ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Key Change Special");
-
+        TXT_SetHelpLabel(key_input, "Fire special weapons the you pickup/buy");
+        
     if (strcmp(name, "  Mega Bomb        ") == 0)
-        TXT_SignalConnect(key_input, "helplabel", GetControlKeyboardHelp, "Select Mega Bomb");
-
+        TXT_SetHelpLabel(key_input, "Change to next available special weapon");
 }
 
 void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
@@ -283,9 +281,9 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
-    TXT_SignalConnect(close_button, "helplabel", GetControlKeyboardHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", GetControlKeyboardHelp, "Accept");
-    TXT_SignalConnect(select_button, "helplabel", GetControlKeyboardHelp, "Select");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press F10 to Accept");
+    TXT_SetHelpLabel(select_button, " Press ENTER to Select");
 
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontrolkeyboardwindow);
     
@@ -330,13 +328,13 @@ static void AddMouseControl(TXT_UNCAST_ARG(table), const char* label, int* var)
     TXT_SignalConnect(mouse_input, "set", MouseSetCallback, var);
 
     if (strcmp(label, " Fire            ") == 0)
-        TXT_SignalConnect(mouse_input, "helplabel", GetControlMouseHelp, "Select Mouse Fire");
-
+        TXT_SetHelpLabel(mouse_input, "Fire main weapons");
+        
     if (strcmp(label, " Change Weapon   ") == 0)
-        TXT_SignalConnect(mouse_input, "helplabel", GetControlMouseHelp, "Select Mouse Change Weapon");
-
+        TXT_SetHelpLabel(mouse_input, "Change to next available special weapon");
+        
     if (strcmp(label, " Mega Bomb       ") == 0)
-        TXT_SignalConnect(mouse_input, "helplabel", GetControlMouseHelp, "Select Mouse Mega Bomb");
+        TXT_SetHelpLabel(mouse_input, "Launch a Mega Bomb");
 }
 
 void SaveMouseConfig(TXT_UNCAST_ARG(widget), void* user_data)
@@ -378,10 +376,10 @@ void GetControlMouse(TXT_UNCAST_ARG(widget), void* user_data)
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
-    TXT_SignalConnect(close_button, "helplabel", GetControlMouseHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", GetControlMouseHelp, "Accept");
-    TXT_SignalConnect(select_button, "helplabel", GetControlMouseHelp, "Select");
-
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press F10 to Accept");
+    TXT_SetHelpLabel(select_button, " Press ENTER to Select");
+    
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontrolmousewindow);
     
     TXT_SignalConnect(select_button, "pressed", WindowSelect, getcontrolmousewindow);
@@ -406,13 +404,13 @@ static void AddJoystickControl(TXT_UNCAST_ARG(table), const char* label, int* va
     TXT_AddWidget(table, joy_input);
 
     if (strcmp(label, "    Fire           ") == 0)
-        TXT_SignalConnect(joy_input, "helplabel", GetControlJoystickHelp, "Select Joystick Fire");
-
+        TXT_SetHelpLabel(joy_input, "Fire main weapons");
+        
     if (strcmp(label, "    Change Special ") == 0)
-        TXT_SignalConnect(joy_input, "helplabel", GetControlJoystickHelp, "Select Joystick Change Special");
-
+        TXT_SetHelpLabel(joy_input, "Change to the next available special weapon");
+        
     if (strcmp(label, "    Mega           ") == 0)
-        TXT_SignalConnect(joy_input, "helplabel", GetControlJoystickHelp, "Select Joystick Mega");
+        TXT_SetHelpLabel(joy_input, "Fires a Mega Bomb");
 }
 
 void SaveJoyConfig(TXT_UNCAST_ARG(widget), void* user_data)
@@ -460,9 +458,9 @@ void GetControlJoystick(TXT_UNCAST_ARG(widget), void* user_data)
     select_button = TXT_NewWindowAction(KEY_ENTER, "Select");
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
-    TXT_SignalConnect(close_button, "helplabel", GetControlJoystickHelp, "Abort");
-    TXT_SignalConnect(accept_button, "helplabel", GetControlJoystickHelp, "Accept");
-    TXT_SignalConnect(select_button, "helplabel", GetControlJoystickHelp, "Select");
+    TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+    TXT_SetHelpLabel(accept_button, " Press F10 to Accept");
+    TXT_SetHelpLabel(select_button, " Press ENTER to Select");
 
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, getcontroljoystickwindow);
     
