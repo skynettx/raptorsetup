@@ -41,7 +41,13 @@ int TXT_WindowKeyPress(txt_window_t *window, int c);
 
 void TXT_SetDesktopTitle(const char *title);
 
-void TXT_SetHelpLabel(const char* title);
+/**
+ * Set the help title displayed at the bottom of the screen.
+ *
+ * @param title         The title to display (UTF-8 format).
+ */
+
+void TXT_DrawHelpLabel(const char* title);
 
 /**
  * Exit the currently-running main loop and return from the

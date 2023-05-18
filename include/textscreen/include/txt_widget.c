@@ -310,20 +310,41 @@ int TXT_HoveringOverWidget(TXT_UNCAST_ARG(widget))
          && y >= widget->y && y < widget->y + widget->h);
 }
 
+void TXT_SetHelpLabel(TXT_UNCAST_ARG(widget), const char* helplabel)
+{
+    TXT_CAST_ARG(txt_widget_t, widget);
+
+    widget->helplabel = strdup(helplabel);
+
+    widget->is_helplabel_set = 1;
+}
+
 void TXT_SetWidgetBG(TXT_UNCAST_ARG(widget))
 {
     TXT_CAST_ARG(txt_widget_t, widget);
     txt_window_t* active_window;
-
+   
     active_window = TXT_GetActiveWindow();
 
+    if (widget->helplabel == NULL)
+    {
+        widget->helplabel = "";
+    }
+
+    // When helplabel is not set for widget draw nothing
+
+    if (widget->is_helplabel_set != 1)
+    {
+        TXT_SetHelpLabel(widget, "");
+    }
+    
     // When in active window no widget is hovering or focused deactivate helplabel 
     
     if (!TXT_ContainsWidget(active_window, widget))
     {
-        TXT_SetHelpLabel("");
+        TXT_DrawHelpLabel("");
     }
-
+    
     if (widget->focused)
     {
         TXT_FGColor(TXT_COLOR_BLACK);
@@ -331,9 +352,9 @@ void TXT_SetWidgetBG(TXT_UNCAST_ARG(widget))
         
         // Set helplabel when widget focused
 
-        if (!TXT_HoveringOverWidget(active_window))
+        if (!TXT_HoveringOverWidget(active_window) && widget->is_helplabel_set == 1)
         {
-            TXT_EmitSignal(widget, "helplabel");
+            TXT_DrawHelpLabel(widget->helplabel);
         }
     }
     
@@ -342,11 +363,11 @@ void TXT_SetWidgetBG(TXT_UNCAST_ARG(widget))
         TXT_BGColor(TXT_HOVER_BACKGROUND, 0);
     }
     
-    if (TXT_HoveringOverWidget(widget))
+    if (TXT_HoveringOverWidget(widget) && widget->is_helplabel_set == 1)
     {
         // Set helplabel when mouse hovering over widget
         
-        TXT_EmitSignal(widget, "helplabel");
+        TXT_DrawHelpLabel(widget->helplabel);
     }
     else
     {
