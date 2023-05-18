@@ -42,9 +42,6 @@
     <ClInclude Include="..\src\txt_joyinput.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\help.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.c">
@@ -69,9 +66,6 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\src\txt_joyinput.c">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\help.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
