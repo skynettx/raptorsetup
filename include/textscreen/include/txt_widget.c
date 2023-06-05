@@ -94,6 +94,10 @@ void TXT_InitWidget(TXT_UNCAST_ARG(widget), txt_widget_class_t *widget_class)
     // Align left by default
 
     widget->align = TXT_HORIZ_LEFT;
+
+    // No helplabel by default
+
+    widget->is_helplabel_set = 0;
 }
 
 void TXT_SignalConnect(TXT_UNCAST_ARG(widget),

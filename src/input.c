@@ -209,31 +209,31 @@ static void AddKeyControl(TXT_UNCAST_ARG(table), const char* name, int* var)
     TXT_CAST_ARG(txt_table_t, table);
     txt_key_input_t* key_input;
 
-    TXT_AddWidget(table, TXT_NewLabel(name));
+    TXT_AddWidget(table, TXT_NewSpecialLabel(name));
     key_input = TXT_NewKeyInput(var);
     TXT_AddWidget(table, key_input);
 
     TXT_SignalConnect(key_input, "set", KeySetCallback, var);
 
-    if (strcmp(name, "  Up               ") == 0)
+    if (strcmp(name, " Up                ") == 0)
         TXT_SetHelpLabel(key_input, "Move ship forward");
         
-    if (strcmp(name, "  Down             ") == 0)
+    if (strcmp(name, " Down              ") == 0)
         TXT_SetHelpLabel(key_input, "Move ship backwards");
         
-    if (strcmp(name, "  Left             ") == 0)
+    if (strcmp(name, " Left              ") == 0)
         TXT_SetHelpLabel(key_input, "Move ship to the left");
         
-    if (strcmp(name, "  Right            ") == 0)
+    if (strcmp(name, " Right             ") == 0)
         TXT_SetHelpLabel(key_input, "Move ship to the right");
         
-    if (strcmp(name, "  Fire             ") == 0)
+    if (strcmp(name, " Fire              ") == 0)
         TXT_SetHelpLabel(key_input, "Fire main weapons");
         
-    if (strcmp(name, "  Change Special   ") == 0)
+    if (strcmp(name, " Change Special    ") == 0)
         TXT_SetHelpLabel(key_input, "Fire special weapons the you pickup/buy");
         
-    if (strcmp(name, "  Mega Bomb        ") == 0)
+    if (strcmp(name, " Mega Bomb         ") == 0)
         TXT_SetHelpLabel(key_input, "Change to next available special weapon");
 }
 
@@ -262,18 +262,18 @@ void GetControlKeyboard(TXT_UNCAST_ARG(widget), void* user_data)
     
     TXT_SetTableColumns(getcontrolkeyboardwindow, 2);
     TXT_SetColumnWidths(getcontrolkeyboardwindow, 4, 3);
-    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator(" Movement "));
-    AddKeyControl(getcontrolkeyboardwindow, "  Up               ", &key_up);
-    AddKeyControl(getcontrolkeyboardwindow, "  Down             ", &key_down);
-    AddKeyControl(getcontrolkeyboardwindow, "  Left             ", &key_left);
-    AddKeyControl(getcontrolkeyboardwindow, "  Right            ", &key_right);
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSpecialSeparator(" Movement ", 6, 6, TXT_COLOR_BRIGHT_BLUE));
+    AddKeyControl(getcontrolkeyboardwindow, " Up                ", &key_up);
+    AddKeyControl(getcontrolkeyboardwindow, " Down              ", &key_down);
+    AddKeyControl(getcontrolkeyboardwindow, " Left              ", &key_left);
+    AddKeyControl(getcontrolkeyboardwindow, " Right             ", &key_right);
     
     TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewStrut(0, 2));
 
-    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSeparator(" Action "));
-    AddKeyControl(getcontrolkeyboardwindow, "  Fire             ", &key_fire);
-    AddKeyControl(getcontrolkeyboardwindow, "  Change Special   ", &key_special);
-    AddKeyControl(getcontrolkeyboardwindow, "  Mega Bomb        ", &key_mega);
+    TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewSpecialSeparator(" Action ", 6, 5, TXT_COLOR_BRIGHT_BLUE));
+    AddKeyControl(getcontrolkeyboardwindow, " Fire              ", &key_fire);
+    AddKeyControl(getcontrolkeyboardwindow, " Change Special    ", &key_special);
+    AddKeyControl(getcontrolkeyboardwindow, " Mega Bomb         ", &key_mega);
 
     TXT_AddWidget(getcontrolkeyboardwindow, TXT_NewStrut(0, 1));
 
@@ -339,12 +339,22 @@ static void AddMouseControl(TXT_UNCAST_ARG(table), const char* label, int* var)
 
 void SaveMouseConfig(TXT_UNCAST_ARG(widget), void* user_data)
 {
-    
+    txt_window_t* window;
+    txt_window_action_t* close_button;
+
     if ((mousebfire > 2) || (mousebchweapon > 2) || (mousebmega > 2))
     {
-         TXT_MessageBox("Error", ("Only LEFT BUTTON, RIGHT BUTTON and MID BUTTON are supported!\n"
-                                  "Please reconfigure mouse buttons before save!"));
+        window = TXT_CustomMessageBox("Error", ("Only LEFT BUTTON, RIGHT BUTTON and MID BUTTON are supported!\n"
+                             "Please reconfigure mouse buttons before save!"), TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_RED, TXT_COLOR_RED, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE);
         
+        close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
+        
+        TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+
+        TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+
+        TXT_SetWindowAction(window, TXT_HORIZ_CENTER, close_button);
+       
         writeflagmouse = 0;
 
         return;
@@ -415,11 +425,22 @@ static void AddJoystickControl(TXT_UNCAST_ARG(table), const char* label, int* va
 
 void SaveJoyConfig(TXT_UNCAST_ARG(widget), void* user_data)
 {
+    txt_window_t* window;
+    txt_window_action_t* close_button;
+    
     if ((joybfireout > 3) || (joybchweaponout > 3) || (joybmegaout > 3))
     {
-         TXT_MessageBox("Error", ("Only BUTTON 1, BUTTON 2, BUTTON 3 and BUTTON 4 are supported!\n"
-                        "Please reconfigure joystick/gamepad buttons before save!"));
+        window = TXT_CustomMessageBox("Error", ("Only BUTTON 1, BUTTON 2, BUTTON 3 and BUTTON 4 are supported!\n"
+                       "Please reconfigure joystick/gamepad buttons before save!"), TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_RED, TXT_COLOR_RED, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE);
+        
+        close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
 
+        TXT_SetHelpLabel(close_button, " Press ESC to Abort");
+
+        TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
+
+        TXT_SetWindowAction(window, TXT_HORIZ_CENTER, close_button);
+        
         writeflagjoy = 0;
 
         return;

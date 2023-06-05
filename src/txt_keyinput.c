@@ -73,7 +73,7 @@ static void OpenPromptWindow(txt_key_input_t* key_input)
 
     key_input->check_conflicts = !TXT_GetModifierState(TXT_MOD_SHIFT);
 
-    window = TXT_MessageBox(NULL, "        Press New Key         ");
+    window = TXT_CustomMessageBox(NULL, "        Press New Key         ", TXT_COLOR_BLUE, TXT_COLOR_GREY, TXT_COLOR_GREY, TXT_COLOR_BLUE, TXT_COLOR_BLUE, TXT_COLOR_BLUE, TXT_COLOR_BLUE);
     TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP, 40, 11);
     
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
