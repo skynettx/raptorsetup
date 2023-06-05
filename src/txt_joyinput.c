@@ -204,7 +204,7 @@ static void OpenErrorWindow(void)
     txt_window_t* window;
     txt_window_action_t* close_button;
 
-    window = TXT_MessageBox(NULL, "Please connect a controller first!");
+    window = TXT_CustomMessageBox(NULL, "Please connect a controller first!", TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_RED, TXT_COLOR_RED, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE, TXT_COLOR_BRIGHT_WHITE);
     
     close_button = TXT_NewWindowAction(KEY_ESCAPE, "Abort");
     

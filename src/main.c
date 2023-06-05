@@ -380,7 +380,7 @@ void InfoWindow(TXT_UNCAST_ARG(widget), void* user_data)
 {
     CheckSetupSettings();
     
-    infowindow = TXT_NewWindow("Current Configuration:                      ");
+    infowindow = TXT_NewCustomWindow("Current Configuration:                      ", TXT_COLOR_DARK_GREY, TXT_COLOR_GREY, TXT_COLOR_GREY, TXT_COLOR_DARK_GREY, TXT_COLOR_DARK_GREY, TXT_COLOR_DARK_GREY, TXT_COLOR_GREY);
     TXT_SetWindowAction(infowindow, TXT_HORIZ_LEFT, NULL);
     TXT_SetWindowAction(infowindow, TXT_HORIZ_RIGHT, NULL);
     TXT_SetWindowPosition(infowindow, TXT_HORIZ_CENTER, TXT_VERT_TOP, TXT_SCREEN_W / 2, 2);
