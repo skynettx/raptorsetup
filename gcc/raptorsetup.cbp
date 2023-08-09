@@ -15,14 +15,14 @@
 				<Compiler>
 					<Add option="-m32" />
 					<Add option="-g" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/i686-w64-mingw32/include/SDL2" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/i686-w64-mingw32/include/SDL2" />
 					<Add directory="../include/textscreen/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m32" />
 					<Add option="-lmingw32 -ltextscreen -lSDL2main -lSDL2" />
 					<Add option="-lgdi32" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/i686-w64-mingw32/lib" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/i686-w64-mingw32/lib" />
 					<Add directory="../include/textscreen/libwin/x86" />
 				</Linker>
 			</Target>
@@ -35,7 +35,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-m32" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/i686-w64-mingw32/include/SDL2" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/i686-w64-mingw32/include/SDL2" />
 					<Add directory="../include/textscreen/include" />
 				</Compiler>
 				<Linker>
@@ -43,7 +43,7 @@
 					<Add option="-m32" />
 					<Add option="-lmingw32 -ltextscreen -lSDL2main -lSDL2" />
 					<Add option="-lgdi32" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/i686-w64-mingw32/lib" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/i686-w64-mingw32/lib" />
 					<Add directory="../include/textscreen/libwin/x86" />
 				</Linker>
 			</Target>
@@ -134,14 +134,14 @@
 				<Compiler>
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/x86_64-w64-mingw32/include/SDL2" />
 					<Add directory="../include/textscreen/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
 					<Add option="-lmingw32 -ltextscreen -lSDL2main -lSDL2" />
 					<Add option="-lgdi32" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/x86_64-w64-mingw32/lib" />
 					<Add directory="../include/textscreen/libwin/x64" />
 				</Linker>
 			</Target>
@@ -155,14 +155,14 @@
 					<Add option="-O2" />
 					<Add option="-m64" />
 					<Add directory="../include/textscreen/include" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/x86_64-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m64" />
 					<Add option="-lmingw32 -ltextscreen -lSDL2main -lSDL2" />
 					<Add option="-lgdi32" />
-					<Add directory="../include/SDL2-devel-2.0.14-mingw/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../include/SDL2-devel-2.28.2-mingw/SDL2-2.28.2/x86_64-w64-mingw32/lib" />
 					<Add directory="../include/textscreen/libwin/x64" />
 				</Linker>
 			</Target>
