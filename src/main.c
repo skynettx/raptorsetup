@@ -32,7 +32,7 @@ char g_setup_path[PATH_MAX];
 int controltype;
 int musiccard;
 int soundfxcard;
-int fullscreen, aspect_ratio, txt_fullscreen, haptic, joy_ipt_MenuNew, sys_midi, alsaclient, alsaport;
+int fullscreen, aspect_ratio, txt_fullscreen, haptic, joy_ipt_MenuNew, sys_midi, winmm_mpu_device, core_dls_synth, core_midi_port, alsaclient, alsaport;
 int keymoveup, keymovedown, keymoveleft, keymoveright, keyfire, keyspecial, keymega;
 static char soundfont[128];
 static char* sf;
@@ -172,6 +172,9 @@ void GetSetupSettings(void)
     haptic = INI_GetPreferenceLong("Setup", "Haptic", 1);
     joy_ipt_MenuNew = INI_GetPreferenceLong("Setup", "joy_ipt_MenuNew", 0);
     sys_midi = INI_GetPreferenceLong("Setup", "sys_midi", 0);
+    winmm_mpu_device = INI_GetPreferenceLong("Setup", "winmm_mpu_device", 0);
+    core_dls_synth = INI_GetPreferenceLong("Setup", "core_dls_synth", 1);
+    core_midi_port = INI_GetPreferenceLong("Setup", "core_midi_port", 0);
     alsaclient = INI_GetPreferenceLong("Setup", "alsa_output_client", 128);
     alsaport = INI_GetPreferenceLong("Setup", "alsa_output_port", 0);
     sf = (char*)INI_GetPreference("Setup", "SoundFont", soundfont, 127, "SoundFont.sf2");
@@ -206,6 +209,9 @@ void SaveSettings(TXT_UNCAST_ARG(widget), void* user_data)
     INI_PutPreferenceLong("Setup", "Haptic", haptic);                           //Save Additional Feature Haptic to SETUP.INI
     INI_PutPreferenceLong("Setup", "joy_ipt_MenuNew", joy_ipt_MenuNew);         //Save Additional Feature joy_ipt_MenuNew to SETUP.INI
     INI_PutPreferenceLong("Setup", "sys_midi", sys_midi);                       //Save Additional Feature sys_midi to SETUP.INI
+    INI_PutPreferenceLong("Setup", "winmm_mpu_device", winmm_mpu_device);       //Save Additional Feature winmm_mpu_device to SETUP.INI
+    INI_PutPreferenceLong("Setup", "core_dls_synth", core_dls_synth);           //Save Additional Feature core_dls_synth to SETUP.INI
+    INI_PutPreferenceLong("Setup", "core_midi_port", core_midi_port);           //Save Additional Feature core_dls_synth to SETUP.INI
     INI_PutPreferenceLong("Setup", "alsa_output_client", alsaclient);           //Save Additional Feature alsa_output_client to SETUP.INI
     INI_PutPreferenceLong("Setup", "alsa_output_port", alsaport);               //Save Additional Feature alsa_output_port to SETUP.INI
     INI_PutPreference("Setup", "SoundFont", sf);                                //Save Additional Feature soundfont to SETUP.INI
@@ -411,6 +417,9 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   txt_checkbox_t* textmodefullbox;
   
   txt_checkbox_t* systemmidibox;
+  txt_inputbox_t* winmmmpudevicebox;
+  txt_checkbox_t* coredlssynthbox;
+  txt_inputbox_t* coremidiportbox;
   txt_inputbox_t* alsaclientbox;
   txt_inputbox_t* alsaportbox;
   txt_inputbox_t* sfbox;
@@ -422,7 +431,10 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   aspectratiobox = TXT_NewCheckBox("Aspect Ratio", &aspect_ratio);
   textmodefullbox = TXT_NewCheckBox("Text Mode Fullscreen", &txt_fullscreen);
   
-  systemmidibox = TXT_NewCheckBox("System Midi", &sys_midi);
+  systemmidibox = TXT_NewCheckBox("System MIDI", &sys_midi);
+  winmmmpudevicebox = TXT_NewIntInputBox(&winmm_mpu_device, 3);
+  coredlssynthbox = TXT_NewCheckBox("Core Audio DLS Synthesizer", &core_dls_synth);
+  coremidiportbox = TXT_NewIntInputBox(&core_midi_port, 3);
   alsaclientbox = TXT_NewIntInputBox(&alsaclient, 4);
   alsaportbox = TXT_NewIntInputBox(&alsaport, 1);
   sfbox = TXT_NewInputBox(&sf, 35);
@@ -450,13 +462,21 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
   systemmidibox,
-  TXT_NewHorizBox(TXT_NewLabel("Alsa Output Port: "), alsaclientbox,
+  TXT_NewHorizBox(TXT_NewLabel("Windows Multimedia MIDI Device: "), winmmmpudevicebox, 
+  TXT_NewLabel(" (Default = 0)"),NULL),
+  coredlssynthbox,
+  TXT_NewHorizBox(TXT_NewLabel("Core MIDI Port: "), coremidiportbox,
+  TXT_NewLabel(" (Default = 0)"), NULL),
+  TXT_NewHorizBox(TXT_NewLabel("ALSA Output Port: "), alsaclientbox,
   TXT_NewLabel(":"), alsaportbox, TXT_NewLabel(" (Default = 128:0)"), NULL),
   TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), sfbox, NULL), NULL);
 
-  TXT_SetHelpLabel(systemmidibox, "Select System Midi On / Off");
-  TXT_SetHelpLabel(alsaclientbox, "Enter the Client Number for Alsa Client");
-  TXT_SetHelpLabel(alsaportbox, "Enter the Port Number for Alsa Port");
+  TXT_SetHelpLabel(systemmidibox, "Select System MIDI On / Off");
+  TXT_SetHelpLabel(winmmmpudevicebox, "Enter the Windows Multimedia MIDI device");
+  TXT_SetHelpLabel(coredlssynthbox, "Select macOS Core Audio DLS Synthesizer On / Off");
+  TXT_SetHelpLabel(coremidiportbox, "Enter the Port Number for Core MIDI");
+  TXT_SetHelpLabel(alsaclientbox, "Enter the Client Number for ALSA Client");
+  TXT_SetHelpLabel(alsaportbox, "Enter the Port Number for ALSA Port");
   TXT_SetHelpLabel(sfbox, "Enter the file name for the GM compatible soundfont in SF2 format");
   
   TXT_AddWidgets(window, TXT_NewSeparator("Controller"),
