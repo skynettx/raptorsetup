@@ -461,14 +461,18 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
   TXT_SetHelpLabel(textmodefullbox, "Select Text Mode Fullscreen On / Off");
 
   TXT_AddWidgets(window, TXT_NewSeparator("Audio"),
-  systemmidibox,
-  TXT_NewHorizBox(TXT_NewLabel("Windows Multimedia MIDI Device: "), winmmmpudevicebox, 
-  TXT_NewLabel(" (Default = 0)"),NULL),
-  coredlssynthbox,
-  TXT_NewHorizBox(TXT_NewLabel("Core MIDI Port: "), coremidiportbox,
-  TXT_NewLabel(" (Default = 0)"), NULL),
-  TXT_NewHorizBox(TXT_NewLabel("ALSA Output Port: "), alsaclientbox,
-  TXT_NewLabel(":"), alsaportbox, TXT_NewLabel(" (Default = 128:0)"), NULL),
+  systemmidibox,TXT_NewConditional(&sys_midi, 1,
+  TXT_NewHorizBox(TXT_NewStrut(4, 0), TXT_NewLabel("Windows Multimedia MIDI Device: "), winmmmpudevicebox,
+  TXT_NewLabel(" (Default = 0)"),NULL)),
+  TXT_NewConditional(&sys_midi, 1,
+  TXT_NewHorizBox(TXT_NewStrut(4, 0), coredlssynthbox, NULL)),
+  TXT_NewConditional(&core_dls_synth, 0,
+  TXT_NewConditional(&sys_midi, 1,
+  TXT_NewHorizBox(TXT_NewStrut(4, 0), TXT_NewLabel("Core MIDI Port: "), coremidiportbox,
+  TXT_NewLabel(" (Default = 0)"), NULL))),
+  TXT_NewConditional(&sys_midi, 1,
+  TXT_NewHorizBox(TXT_NewStrut(4, 0), TXT_NewLabel("ALSA Output Port: "), alsaclientbox,
+  TXT_NewLabel(":"), alsaportbox, TXT_NewLabel(" (Default = 128:0)"), NULL)),
   TXT_NewHorizBox(TXT_NewLabel("TSF SoundFont Filename: "), sfbox, NULL), NULL);
 
   TXT_SetHelpLabel(systemmidibox, "Select System MIDI On / Off");
