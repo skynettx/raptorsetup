@@ -480,8 +480,8 @@ void AdditionalFeatures(TXT_UNCAST_ARG(widget), void* user_data)
 	coremidiportbox = TXT_NewIntInputBox(&core_midi_port, 3);
 	alsaclientbox = TXT_NewIntInputBox(&alsaclient, 4);
 	alsaportbox = TXT_NewIntInputBox(&alsaport, 1);
-	sfbox = TXT_NewInputBox(&sf, 35);
-
+	sfbox = TXT_NewInputBoxCustomSize(&sf, 115, 35);
+	
 	hapticbox = TXT_NewCheckBox("Haptic (Game Controller Rumble Support)", &haptic);
 	menunewbox = TXT_NewCheckBox("New Joystick Menu Input", &joy_ipt_MenuNew);
 
