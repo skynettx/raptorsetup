@@ -4,6 +4,14 @@ with additional features for the reverse-engineered source port Raptor as well.
 This tool based on the awesome libtextscreen from chocolate-doom.
 
 ![Alt text](https://imgur.com/Lo5FQQu.jpg "Raptor Setup")
+The `SETUP.INI` configuration file is created and edited in the following directories under the listed operating systems:
+```
+Windows: Users\Username\AppData\Roaming\Raptor\
+Linux: ~/.local/share/Raptor/
+macOS: ~/Library/Application Support/Raptor/
+```
+Under all other non-officially supported systems, `SETUP.INI` is created and edited in the current working directory.
+
 ## Build
 The project supports the compilers msvc, gcc and clang. Supported architectures are 32 bit and 64 bit
 for Windows, Linux and macOS. When you have installed git on your system you can clone the repository 
