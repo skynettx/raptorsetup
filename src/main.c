@@ -10,6 +10,7 @@
 #define PATH_MAX        4096
 #endif // __GNUC__
 
+#include "SDL_filesystem.h"
 #include "textscreen.h"
 #include "prefapi.h"
 #include "main.h"
@@ -21,11 +22,6 @@
 #define PATH_MAX        4096
 #define access _access
 #endif // _MSC_VER
-
-#if __linux__ || __APPLE__
-#include <sys/types.h>
-#include <sys/stat.h>
-#endif // __linux__ || __APPLE__
 
 int setupflag, writesetupflag;
 char* textbox_control = NULL;
@@ -187,37 +183,23 @@ void GetSetupSettings(void)
 /////////////////////////////////////////////Get Setup.ini/////////////////////////////////////////////////////////////////////
 const char* RAP_DataPath(void)
 {
-	char getpath[PATH_MAX];
-	char* gethome;
-#ifdef _WIN32
-	const char* setuppath = "\\AppData\\Roaming\\Raptor\\";
-	gethome = getenv("HOMEPATH");
-#endif // _WIN32
-#ifdef __linux__
-	const char* setuppath = "/.local/share/Raptor/";
-	gethome = getenv("HOME");
-#endif // __linux__
-#ifdef __APPLE__
-	const char* setuppath = "/Library/Application Support/Raptor/";
-	gethome = getenv("HOME");
-#endif // __APPLE__
 #if _WIN32 || __linux__ || __APPLE__
-	strcpy(getpath, gethome);
-	sprintf(getpath, "%s%s", getpath, setuppath);
+	char* gethome;
 
-	if (access(getpath, 0))
+	gethome = SDL_GetPrefPath("", "Raptor");
+
+	if (gethome != NULL)
 	{
-#ifdef _WIN32
-		_mkdir(getpath);
-#else
-		mkdir(getpath, 0755);
-#endif
+		strcpy(g_data_path, gethome);
+		strcpy(g_setup_path, gethome);
+		sprintf(g_setup_path, "%s%s", g_setup_path, "SETUP.INI");
+		hasdatapath = 1;
+		SDL_free(gethome);
 	}
-
-	strcpy(g_data_path, getpath);
-	sprintf(getpath, "%s%s", getpath, "SETUP.INI");
-	hasdatapath = 1;
-	strcpy(g_setup_path, getpath);
+	else
+	{
+		exit(0);
+	}
 
 	return g_data_path;
 #else
