@@ -45,8 +45,7 @@ make
 ## Install
 
 ### Windows
-Copy the `SDL.dll` from `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x86\` `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x64\` folder or from 
-`include\SDL2-devel-2.28.2-mingw\SDL2-2.28.2\i686-w64-mingw32\bin\` `include\SDL2-devel-2.28.2-mingw\SDL2-2.28.2\x86_64-w64-mingw32\bin\` folder (depending on which version you prefer) to working directory.
+Copy the file `SDL.dll` from `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x86\` for 32 bit installation or for 64 bit installation from `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x64\` to working directory.
 
 ### Linux
 Install lib-sdl2 32 bit and or 64 bit from the packagemanager of your respective distro.
