@@ -3,7 +3,16 @@ Creates and edits the SETUP.INI config file for Raptor Call Of The Shadows DOS v
 with additional features for the reverse-engineered source port Raptor as well.
 This tool based on the awesome libtextscreen from chocolate-doom.
 
-![Alt text](https://imgur.com/Lo5FQQu.jpg "Raptor Setup")
+![Alt text](https://imgur.com/Lo5FQQu.jpg "Raptor Setup")  
+
+The `SETUP.INI` configuration file is created and edited in the following directories under the listed operating systems:
+```
+Windows: Users\Username\AppData\Roaming\Raptor\
+Linux: ~/.local/share/Raptor/
+macOS: ~/Library/Application Support/Raptor/
+```
+Under all other non-officially supported systems, `SETUP.INI` is created and edited in the current working directory.
+
 ## Build
 The project supports the compilers msvc, gcc and clang. Supported architectures are 32 bit and 64 bit
 for Windows, Linux and macOS. When you have installed git on your system you can clone the repository 
@@ -36,8 +45,7 @@ make
 ## Install
 
 ### Windows
-Copy the `SDL.dll` from `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x86\` `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x64\` folder or from 
-`include\SDL2-devel-2.28.2-mingw\SDL2-2.28.2\i686-w64-mingw32\bin\` `include\SDL2-devel-2.28.2-mingw\SDL2-2.28.2\x86_64-w64-mingw32\bin\` folder (depending on which version you prefer) to working directory.
+Copy the file `SDL.dll` from `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x86\` for 32 bit installation or for 64 bit installation from `include\SDL2-devel-2.28.2-VC\SDL2-2.28.2\lib\x64\` to working directory.
 
 ### Linux
 Install lib-sdl2 32 bit and or 64 bit from the packagemanager of your respective distro.
