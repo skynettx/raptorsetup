@@ -5,8 +5,8 @@
 MAINICON ICON "raptorsetup.ico"
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 0,0,0,0
-    PRODUCTVERSION 0,0,0,0
+    FILEVERSION 1,0,9,0
+    PRODUCTVERSION 1,0,9,0
     FILEFLAGSMASK 0x3FL
     FILEFLAGS 0x0L
     FILEOS 0x4L
@@ -17,14 +17,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4"
         BEGIN
-            VALUE "CompanyName", "..."
-            VALUE "FileDescription", "..."
-            VALUE "FileVersion", "0.0.0.0"
-            VALUE "InternalName", "..."
-            VALUE "LegalCopyright", "© ..."
+            VALUE "CompanyName", "skynettx"
+            VALUE "FileDescription", "Raptor 1.0.9 Setup"
+            VALUE "FileVersion", "1.0.9"
+            VALUE "InternalName", "raptorsetup"
+            VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "raptorsetup"
             VALUE "ProductName", "Raptor Setup"
-            VALUE "ProductVersion", "0.0"
+            VALUE "ProductVersion", "1.0.9"
         END
     END
     BLOCK "VarFileInfo"
