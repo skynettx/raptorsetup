@@ -1,3 +1,6 @@
+# Since October 2, 2025, Raptor Setup is part of the Raptor Project
+https://github.com/skynettx/raptor
+
 # Raptor Setup
 Creates and edits the SETUP.INI config file for Raptor Call Of The Shadows DOS versions and
 with additional features for the reverse-engineered source port Raptor as well.
@@ -52,6 +55,9 @@ Install lib-sdl2 32 bit and or 64 bit from the packagemanager of your respective
 
 ### macOS
 Install lib-sdl2 from dmg or from a packagemanager like brew etc.
+
+## License
+Raptor Setup is licensed under the [GPLv2](https://github.com/skynettx/raptorsetup/blob/master/LICENSE) or later.
 
 ## Thanks
 Special thanks for libtextscreen to all contributors from [chocolate-doom project](https://github.com/chocolate-doom).
